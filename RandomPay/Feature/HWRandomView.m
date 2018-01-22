@@ -9,6 +9,8 @@
 #import "HWRandomView.h"
 #import "MBProgressHUD+VBAdd.h"
 #import "NSNumber+Random.h"
+#import "RLMRealm.h"
+#import "HWRandom.h"
 
 @interface HWRandomView ()
 
@@ -18,6 +20,7 @@
 @property (nonatomic, strong) UITextField *fldMax;
 
 @property (nonatomic, strong) UIButton *btnStart;
+@property (nonatomic, strong) UIButton *btnClean;
 
 @property (nonatomic, strong) UILabel *lblIgnoreSingleDigits;
 @property (nonatomic, strong) UISwitch *switchDigits;
@@ -45,6 +48,15 @@
     return self;
 }
 
+- (instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier {
+    self = [super initWithReuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self loadViews];
+    }
+    return self;
+}
+
+
 - (void)loadViews {
     [self addSubview:self.lblRandom];
     [self addSubview:self.fldMin];
@@ -56,6 +68,8 @@
 
     [self addSubview:self.lblHasDecimals];
     [self addSubview:self.switchDecimals];
+
+    [self addSubview:self.btnClean];
 
     [self.lblRandom mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -100,6 +114,12 @@
         make.centerX.equalTo(@0);
         make.top.equalTo(self.switchDigits.mas_bottom).offset(5);
     }];
+
+    [self.btnClean mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(60, 34));
+        make.right.equalTo(@-5);
+        make.bottom.equalTo(@-5);
+    }];
 }
 
 #pragma mark - touch action
@@ -123,12 +143,31 @@
     [self endEditing:YES];
 
     NSNumber *result = [NSNumber randomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
+
+    RLMRealm *realm = [RLMRealm defaultRealm];
+
+    [realm beginWriteTransaction];
+
+    HWRandom *random = [HWRandom new];
+    random.randomDate = [NSDate date];
+    random.value = result;
+
+    [realm addObject:random];
+    [realm commitWriteTransaction];
+
     if (self.switchDecimals.on) {
         self.lblRandom.text = [NSString stringWithFormat:@"%.1f", result.floatValue];
     } else {
         self.lblRandom.text = [NSString stringWithFormat:@"%ld", result.integerValue];
     }
 
+}
+
+- (void)cleanAction {
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm deleteObjects:[HWRandom allObjects]];
+    [realm commitWriteTransaction];
 }
 
 #pragma mark - private method
@@ -151,7 +190,7 @@
 
 - (UILabel *)lblRandom {
     if (!_lblRandom) {
-        _lblRandom = [UILabel labelWithAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00] font:[UIFont systemFontOfSize:88 weight:UIFontWeightLight] text:@"0"];
+        _lblRandom = [UILabel labelWithAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00] font:[UIFont systemFontOfSize:44 weight:UIFontWeightLight] text:@"0"];
     }
     return _lblRandom;
 }
@@ -183,6 +222,15 @@
     }
     return _btnStart;
 }
+
+- (UIButton *)btnClean {
+    if (!_btnClean) {
+        _btnClean = [UIButton buttonWithFont:[UIFont systemFontOfSize:40] title:@"✖︎" textColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00]];
+        [_btnClean addTarget:self action:@selector(cleanAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _btnClean;
+}
+
 
 - (UILabel *)lblIgnoreSingleDigits {
     if (!_lblIgnoreSingleDigits) {

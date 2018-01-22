@@ -1,5 +1,5 @@
 //
-//  HWRandomView.h
+//  HWRandomHistoryCell.h
 //  RandomPay
 //
 //  Created by Heath on 22/01/2018.
@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HWRandomView : UITableViewHeaderFooterView
+@class HWRandom;
 
+@interface HWRandomHistoryCell : UITableViewCell
+
+- (void)updateCell:(HWRandom *)random;
 @end

@@ -23,6 +23,8 @@
 		7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FD72015BB7200336040 /* HWRandomView.m */; };
 		7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FD92015C3A300336040 /* MBProgressHUD+VBAdd.m */; };
 		7EA29FDE2015C8D700336040 /* NSNumber+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FDD2015C8D700336040 /* NSNumber+Random.m */; };
+		7EA29FE22015D38A00336040 /* HWRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE12015D38A00336040 /* HWRandom.m */; };
+		7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +64,10 @@
 		7EA29FDA2015C3A300336040 /* MBProgressHUD+VBAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+VBAdd.h"; sourceTree = "<group>"; };
 		7EA29FDC2015C8D700336040 /* NSNumber+Random.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Random.h"; sourceTree = "<group>"; };
 		7EA29FDD2015C8D700336040 /* NSNumber+Random.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Random.m"; sourceTree = "<group>"; };
+		7EA29FE02015D38A00336040 /* HWRandom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWRandom.h; sourceTree = "<group>"; };
+		7EA29FE12015D38A00336040 /* HWRandom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWRandom.m; sourceTree = "<group>"; };
+		7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWRandomHistoryCell.h; sourceTree = "<group>"; };
+		7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWRandomHistoryCell.m; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,7 @@
 		7EA29F972015ABCE00336040 /* RandomPay */ = {
 			isa = PBXGroup;
 			children = (
+				7EA29FDF2015D37200336040 /* Database */,
 				7EA29FB32015B10000336040 /* Feature */,
 				7EA29FB22015B10000336040 /* Tools */,
 				7EA29F982015ABCE00336040 /* AppDelegate.h */,
@@ -146,8 +153,19 @@
 				7EA29FBE2015B3DE00336040 /* BaseViewController.m */,
 				7EA29FD62015BB7200336040 /* HWRandomView.h */,
 				7EA29FD72015BB7200336040 /* HWRandomView.m */,
+				7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */,
+				7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */,
 			);
 			path = Feature;
+			sourceTree = "<group>";
+		};
+		7EA29FDF2015D37200336040 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				7EA29FE02015D38A00336040 /* HWRandom.h */,
+				7EA29FE12015D38A00336040 /* HWRandom.m */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		836A256E3E4615AE52891E4B /* Pods */ = {
@@ -298,6 +316,7 @@
 			files = (
 				7EA29FDE2015C8D700336040 /* NSNumber+Random.m in Sources */,
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
+				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
 				7EA29FBF2015B3DE00336040 /* BaseViewController.m in Sources */,
 				7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */,
@@ -307,6 +326,7 @@
 				7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */,
 				7EA29FCA2015B65B00336040 /* UITableView+Addition.m in Sources */,
 				7EA29FCB2015B65B00336040 /* UITableViewCell+Register.m in Sources */,
+				7EA29FE22015D38A00336040 /* HWRandom.m in Sources */,
 				7EA29FCD2015B65B00336040 /* UILabel+Addition.m in Sources */,
 				7EA29FD12015B67700336040 /* UIFont+ElAdd.m in Sources */,
 				7EA29FCE2015B65B00336040 /* UIButton+Addition.m in Sources */,
