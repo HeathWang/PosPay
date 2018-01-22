@@ -13,9 +13,12 @@
 		7EA29FA22015ABCE00336040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA12015ABCE00336040 /* Assets.xcassets */; };
 		7EA29FA52015ABCE00336040 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA32015ABCE00336040 /* LaunchScreen.storyboard */; };
 		7EA29FA82015ABCE00336040 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FA72015ABCE00336040 /* main.m */; };
+		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D1C122C625CBC184CD6D439 /* Pods-RandomPay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomPay.release.xcconfig"; path = "Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay.release.xcconfig"; sourceTree = "<group>"; };
+		62746C6D62B5103C39EC280F /* Pods-RandomPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomPay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay.debug.xcconfig"; sourceTree = "<group>"; };
 		7EA29F952015ABCE00336040 /* RandomPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA29F982015ABCE00336040 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7EA29F992015ABCE00336040 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -26,6 +29,8 @@
 		7EA29FA42015ABCE00336040 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7EA29FA62015ABCE00336040 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7EA29FA72015ABCE00336040 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7EA29FAE2015AE6300336040 /* RandomPay.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RandomPay.pch; sourceTree = "<group>"; };
+		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +50,8 @@
 			children = (
 				7EA29F972015ABCE00336040 /* RandomPay */,
 				7EA29F962015ABCE00336040 /* Products */,
+				836A256E3E4615AE52891E4B /* Pods */,
+				94E71C1274ED30A1468E5D33 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,8 +75,26 @@
 				7EA29FA32015ABCE00336040 /* LaunchScreen.storyboard */,
 				7EA29FA62015ABCE00336040 /* Info.plist */,
 				7EA29FA72015ABCE00336040 /* main.m */,
+				7EA29FAE2015AE6300336040 /* RandomPay.pch */,
 			);
 			path = RandomPay;
+			sourceTree = "<group>";
+		};
+		836A256E3E4615AE52891E4B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				62746C6D62B5103C39EC280F /* Pods-RandomPay.debug.xcconfig */,
+				5D1C122C625CBC184CD6D439 /* Pods-RandomPay.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		94E71C1274ED30A1468E5D33 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -78,9 +104,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7EA29FAB2015ABCE00336040 /* Build configuration list for PBXNativeTarget "RandomPay" */;
 			buildPhases = (
+				B3EA0B1C8B2237A1A1809952 /* [CP] Check Pods Manifest.lock */,
 				7EA29F912015ABCE00336040 /* Sources */,
 				7EA29F922015ABCE00336040 /* Frameworks */,
 				7EA29F932015ABCE00336040 /* Resources */,
+				8E8C81C5A85B20688AA6910B /* [CP] Embed Pods Frameworks */,
+				A2C78C3684365A3044FA9CCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -97,6 +126,7 @@
 		7EA29F8D2015ABCE00336040 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = HW;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = heathwang;
 				TargetAttributes = {
@@ -136,6 +166,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8E8C81C5A85B20688AA6910B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2C78C3684365A3044FA9CCC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay-resources.sh",
+				"${PODS_ROOT}/DateTools/DateTools/DateTools/DateTools.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B3EA0B1C8B2237A1A1809952 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RandomPay-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7EA29F912015ABCE00336040 /* Sources */ = {
@@ -276,10 +360,12 @@
 		};
 		7EA29FAC2015ABCE00336040 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62746C6D62B5103C39EC280F /* Pods-RandomPay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4R83Q5KV5;
+				GCC_PREFIX_HEADER = RandomPay/RandomPay.pch;
 				INFOPLIST_FILE = RandomPay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.heathwang.RandomPay;
@@ -290,10 +376,12 @@
 		};
 		7EA29FAD2015ABCE00336040 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D1C122C625CBC184CD6D439 /* Pods-RandomPay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K4R83Q5KV5;
+				GCC_PREFIX_HEADER = RandomPay/RandomPay.pch;
 				INFOPLIST_FILE = RandomPay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.heathwang.RandomPay;
