@@ -35,6 +35,10 @@
     }];
 }
 
+#pragma mark - touch action
+
+
+
 #pragma mark - Getter
 
 - (HWRandomView *)randomView {

@@ -7,6 +7,8 @@
 //
 
 #import "HWRandomView.h"
+#import "MBProgressHUD+VBAdd.h"
+#import "NSNumber+Random.h"
 
 @interface HWRandomView ()
 
@@ -16,6 +18,12 @@
 @property (nonatomic, strong) UITextField *fldMax;
 
 @property (nonatomic, strong) UIButton *btnStart;
+
+@property (nonatomic, strong) UILabel *lblIgnoreSingleDigits;
+@property (nonatomic, strong) UISwitch *switchDigits;
+
+@property (nonatomic, strong) UILabel *lblHasDecimals;
+@property (nonatomic, strong) UISwitch *switchDecimals;
 
 @end
 
@@ -43,6 +51,12 @@
     [self addSubview:self.fldMax];
     [self addSubview:self.btnStart];
 
+    [self addSubview:self.lblIgnoreSingleDigits];
+    [self addSubview:self.switchDigits];
+
+    [self addSubview:self.lblHasDecimals];
+    [self addSubview:self.switchDecimals];
+
     [self.lblRandom mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.centerX.equalTo(@0);
@@ -50,10 +64,10 @@
 
     [self.fldMin mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.equalTo(self.fldMax);
-        make.left.equalTo(@18);
+        make.left.equalTo(@14);
         make.right.equalTo(@-18);
         make.top.equalTo(self.lblRandom.mas_bottom).offset(5);
-        make.height.mas_equalTo(44);
+        make.height.mas_equalTo(38);
     }];
 
     [self.fldMax mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -61,11 +75,60 @@
         make.top.equalTo(self.fldMin.mas_bottom).offset(5);
     }];
 
+    [self.switchDigits mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.fldMax.mas_bottom).offset(5);
+        make.left.equalTo(self.lblIgnoreSingleDigits.mas_right).offset(12);
+    }];
+
+    [self.lblIgnoreSingleDigits mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.switchDigits);
+        make.left.equalTo(@14);
+    }];
+
+    [self.switchDecimals mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.switchDigits);
+        make.right.equalTo(@-14);
+    }];
+
+    [self.lblHasDecimals mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.switchDigits);
+        make.right.equalTo(self.switchDecimals.mas_left).offset(-12);
+    }];
+
     [self.btnStart mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(100, 44));
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.fldMax.mas_bottom).offset(5);
+        make.top.equalTo(self.switchDigits.mas_bottom).offset(5);
     }];
+}
+
+#pragma mark - touch action
+
+- (void)randomAction {
+    if (self.fldMin.text.integerValue <= 0) {
+        [MBProgressHUD showNoBlockTip:@"请输入随机数最小数" toView:[UIApplication sharedApplication].keyWindow hideDelay:2];
+        return;
+    }
+
+    if (self.fldMax.text.integerValue <= 0) {
+        [MBProgressHUD showNoBlockTip:@"请输入随机数最大数" toView:[UIApplication sharedApplication].keyWindow hideDelay:2];
+        return;
+    }
+
+    if (self.fldMax.text.integerValue <= self.fldMin.text.integerValue) {
+        [MBProgressHUD showNoBlockTip:@"随机数最大数需大于最小数" toView:[UIApplication sharedApplication].keyWindow hideDelay:2];
+        return;
+    }
+
+    [self endEditing:YES];
+
+    NSNumber *result = [NSNumber randomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
+    if (self.switchDecimals.on) {
+        self.lblRandom.text = [NSString stringWithFormat:@"%.1f", result.floatValue];
+    } else {
+        self.lblRandom.text = [NSString stringWithFormat:@"%ld", result.integerValue];
+    }
+
 }
 
 #pragma mark - private method
@@ -88,7 +151,7 @@
 
 - (UILabel *)lblRandom {
     if (!_lblRandom) {
-        _lblRandom = [UILabel labelWithAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00] font:[UIFont systemFontOfSize:88 weight:UIFontWeightHeavy] text:@"0"];
+        _lblRandom = [UILabel labelWithAlignment:NSTextAlignmentCenter textColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00] font:[UIFont systemFontOfSize:88 weight:UIFontWeightLight] text:@"0"];
     }
     return _lblRandom;
 }
@@ -115,8 +178,38 @@
         [_btnStart setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00]] forState:UIControlStateNormal];
         _btnStart.layer.masksToBounds = YES;
         _btnStart.layer.cornerRadius = 8;
+
+        [_btnStart addTarget:self action:@selector(randomAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _btnStart;
+}
+
+- (UILabel *)lblIgnoreSingleDigits {
+    if (!_lblIgnoreSingleDigits) {
+        _lblIgnoreSingleDigits = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:14] text:@"忽略个位"];
+    }
+    return _lblIgnoreSingleDigits;
+}
+
+- (UISwitch *)switchDigits {
+    if (!_switchDigits) {
+        _switchDigits = [[UISwitch alloc] init];
+    }
+    return _switchDigits;
+}
+
+- (UILabel *)lblHasDecimals {
+    if (!_lblHasDecimals) {
+        _lblHasDecimals = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:14] text:@"包含小数"];
+    }
+    return _lblHasDecimals;
+}
+
+- (UISwitch *)switchDecimals {
+    if (!_switchDecimals) {
+        _switchDecimals = [UISwitch new];
+    }
+    return _switchDecimals;
 }
 
 

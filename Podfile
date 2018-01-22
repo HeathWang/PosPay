@@ -6,6 +6,7 @@ def sharedPods
     pod 'DateTools'
     pod 'Realm'
     pod 'IQKeyboardManager'
+    pod 'MBProgressHUD', '~> 0.9.2'
 end
 
 target 'RandomPay' do
