@@ -11,6 +11,7 @@
 #import "NSNumber+Random.h"
 #import "RLMRealm.h"
 #import "HWRandom.h"
+#import "NSUserDefaults+HWCache.h"
 
 @interface HWRandomView ()
 
@@ -61,6 +62,13 @@
     [self addSubview:self.lblRandom];
     [self addSubview:self.fldMin];
     [self addSubview:self.fldMax];
+
+    NSArray *history = [NSUserDefaults getCacheRandomValues];
+    if (history.count >= 2) {
+        self.fldMin.text = history[0];
+        self.fldMax.text = history[1];
+    }
+
     [self addSubview:self.btnStart];
 
     [self addSubview:self.lblIgnoreSingleDigits];
@@ -155,6 +163,7 @@
     [realm addObject:random];
     [realm commitWriteTransaction];
 
+    [NSUserDefaults cacheMinRandomValue:self.fldMin.text maxValue:self.fldMax.text];
     if (self.switchDecimals.on) {
         self.lblRandom.text = [NSString stringWithFormat:@"%.1f", result.floatValue];
     } else {

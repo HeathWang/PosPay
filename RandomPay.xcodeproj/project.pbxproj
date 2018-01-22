@@ -25,6 +25,7 @@
 		7EA29FDE2015C8D700336040 /* NSNumber+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FDD2015C8D700336040 /* NSNumber+Random.m */; };
 		7EA29FE22015D38A00336040 /* HWRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE12015D38A00336040 /* HWRandom.m */; };
 		7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */; };
+		7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,8 @@
 		7EA29FE12015D38A00336040 /* HWRandom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWRandom.m; sourceTree = "<group>"; };
 		7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWRandomHistoryCell.h; sourceTree = "<group>"; };
 		7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWRandomHistoryCell.m; sourceTree = "<group>"; };
+		7EA29FE62015E05600336040 /* NSUserDefaults+HWCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HWCache.h"; sourceTree = "<group>"; };
+		7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HWCache.m"; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -138,6 +141,8 @@
 				7EA29FD92015C3A300336040 /* MBProgressHUD+VBAdd.m */,
 				7EA29FDC2015C8D700336040 /* NSNumber+Random.h */,
 				7EA29FDD2015C8D700336040 /* NSNumber+Random.m */,
+				7EA29FE62015E05600336040 /* NSUserDefaults+HWCache.h */,
+				7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EA29FDE2015C8D700336040 /* NSNumber+Random.m in Sources */,
+				7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */,
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
