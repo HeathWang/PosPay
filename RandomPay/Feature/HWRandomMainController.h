@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  HWRandomMainController.h
 //  RandomPay
 //
 //  Created by Heath on 22/01/2018.
@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface ViewController : UIViewController
-
+@interface HWRandomMainController : BaseViewController
 
 @end
-

@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "HWBaseNavigationController.h"
+#import "HWRandomMainController.h"
+#import "IQKeyboardManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self initWindow];
+    [self configKeyboardManager];
+
     return YES;
 }
 
@@ -45,6 +51,25 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - init & config
+
+- (void)initWindow {
+    UIWindow *window1 = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+
+    HWRandomMainController *mainController = [HWRandomMainController new];
+    HWBaseNavigationController *rootNav = [[HWBaseNavigationController alloc] initWithRootViewController:mainController];
+    rootNav.hideLine = NO;
+
+    window1.rootViewController = rootNav;
+    self.window = window1;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)configKeyboardManager {
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 }
 
 

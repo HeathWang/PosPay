@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <Masonry.h>
+#import "CategoryHeader.h"
 
 #endif
 
@@ -31,5 +32,13 @@
 
 #define ScreenWidth     [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight    [UIScreen mainScreen].bounds.size.height
+
+#pragma mark - adjust iphone size
+
+#define iPhoneplus (ScreenWidth > 375 ? YES : NO)
+#define IPHONEPLUS(f)               (ScreenWidth / 375) * (f)
+
+#define iPhoneFont (ScreenWidth > 375 ? YES : NO)
+#define IPHONEFONT(f)               (iPhoneFont ? (ScreenWidth / 375) * f : f)
 
 #endif /* RandomPay_pch */
