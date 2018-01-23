@@ -14,6 +14,7 @@
 @property NSNumber<RLMFloat> *value;
 
 
++ (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals;
 @end
 
 // This protocol enables typed collections. i.e.:

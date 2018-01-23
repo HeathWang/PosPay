@@ -7,6 +7,7 @@
 //
 
 #import "HWRandom.h"
+#import "NSNumber+Random.h"
 
 @implementation HWRandom
 
@@ -23,5 +24,18 @@
 //{
 //    return @[];
 //}
+
++ (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals {
+    NSNumber *result = [NSNumber randomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];
+    if ([HWRandom checkIfExists:result]) {
+        result = [HWRandom getUniqueRandomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];
+    }
+    return result;
+}
+
++ (BOOL)checkIfExists:(NSNumber *)result {
+    RLMResults *queryResults = [HWRandom objectsWhere:@"value == %@", result];
+    return queryResults.count > 0;
+}
 
 @end

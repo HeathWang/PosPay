@@ -149,8 +149,9 @@
     }
 
     [self endEditing:YES];
+    [MBProgressHUD showHUDWithMessage:nil toView:[UIApplication sharedApplication].keyWindow];
 
-    NSNumber *result = [NSNumber randomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
+    NSNumber *result = [HWRandom getUniqueRandomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
 
     RLMRealm *realm = [RLMRealm defaultRealm];
 
@@ -169,6 +170,10 @@
     } else {
         self.lblRandom.text = [NSString stringWithFormat:@"%ld", result.integerValue];
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideAllHUDsForView:[UIApplication sharedApplication].keyWindow animated:NO];
+    });
 
 }
 
