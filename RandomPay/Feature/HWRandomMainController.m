@@ -57,7 +57,7 @@
         // Query results have changed, so apply them to the UITableView
         [tableView1 beginUpdates];
         [tableView1 deleteRowsAtIndexPaths:[change deletionsInSection:0]
-                         withRowAnimation:UITableViewRowAnimationAutomatic];
+                         withRowAnimation:UITableViewRowAnimationFade];
         [tableView1 insertRowsAtIndexPaths:[change insertionsInSection:0]
                          withRowAnimation:UITableViewRowAnimationAutomatic];
         [tableView1 reloadRowsAtIndexPaths:[change modificationsInSection:0]
@@ -104,11 +104,19 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    HWRandom *hwRandom = self.historyList[indexPath.row];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    [realm deleteObject:hwRandom];
+    [realm commitWriteTransaction];
+}
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
 }
 
 
