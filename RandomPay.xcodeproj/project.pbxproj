@@ -26,6 +26,8 @@
 		7EA29FE22015D38A00336040 /* HWRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE12015D38A00336040 /* HWRandom.m */; };
 		7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */; };
 		7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */; };
+		7EA29FEB201B075500336040 /* HWDayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FEA201B075500336040 /* HWDayList.m */; };
+		7EA29FEE201B113C00336040 /* HWDaySectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FED201B113C00336040 /* HWDaySectionHeader.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +73,10 @@
 		7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWRandomHistoryCell.m; sourceTree = "<group>"; };
 		7EA29FE62015E05600336040 /* NSUserDefaults+HWCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+HWCache.h"; sourceTree = "<group>"; };
 		7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+HWCache.m"; sourceTree = "<group>"; };
+		7EA29FE9201B075500336040 /* HWDayList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWDayList.h; sourceTree = "<group>"; };
+		7EA29FEA201B075500336040 /* HWDayList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDayList.m; sourceTree = "<group>"; };
+		7EA29FEC201B113C00336040 /* HWDaySectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWDaySectionHeader.h; sourceTree = "<group>"; };
+		7EA29FED201B113C00336040 /* HWDaySectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDaySectionHeader.m; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,6 +166,8 @@
 				7EA29FD72015BB7200336040 /* HWRandomView.m */,
 				7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */,
 				7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */,
+				7EA29FEC201B113C00336040 /* HWDaySectionHeader.h */,
+				7EA29FED201B113C00336040 /* HWDaySectionHeader.m */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -169,6 +177,8 @@
 			children = (
 				7EA29FE02015D38A00336040 /* HWRandom.h */,
 				7EA29FE12015D38A00336040 /* HWRandom.m */,
+				7EA29FE9201B075500336040 /* HWDayList.h */,
+				7EA29FEA201B075500336040 /* HWDayList.m */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -332,10 +342,12 @@
 				7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */,
 				7EA29FCA2015B65B00336040 /* UITableView+Addition.m in Sources */,
 				7EA29FCB2015B65B00336040 /* UITableViewCell+Register.m in Sources */,
+				7EA29FEE201B113C00336040 /* HWDaySectionHeader.m in Sources */,
 				7EA29FE22015D38A00336040 /* HWRandom.m in Sources */,
 				7EA29FCD2015B65B00336040 /* UILabel+Addition.m in Sources */,
 				7EA29FD12015B67700336040 /* UIFont+ElAdd.m in Sources */,
 				7EA29FCE2015B65B00336040 /* UIButton+Addition.m in Sources */,
+				7EA29FEB201B075500336040 /* HWDayList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

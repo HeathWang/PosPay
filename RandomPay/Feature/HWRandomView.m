@@ -12,6 +12,8 @@
 #import "RLMRealm.h"
 #import "HWRandom.h"
 #import "NSUserDefaults+HWCache.h"
+#import "HWDayList.h"
+#import "DateTools.h"
 
 @interface HWRandomView ()
 
@@ -49,14 +51,13 @@
     return self;
 }
 
-- (instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier {
-    self = [super initWithReuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self loadViews];
-    }
-    return self;
-}
-
+//- (instancetype)initWithReuseIdentifier:(nullable NSString *)reuseIdentifier {
+//    self = [super initWithReuseIdentifier:reuseIdentifier];
+//    if (self) {
+//        [self loadViews];
+//    }
+//    return self;
+//}
 
 - (void)loadViews {
     [self addSubview:self.lblRandom];
@@ -154,14 +155,30 @@
     NSNumber *result = [HWRandom getUniqueRandomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
 
     RLMRealm *realm = [RLMRealm defaultRealm];
+    NSDate *nowDate = [[NSDate date] dateByAddingDays:1];
+    NSNumber *dayId = @([nowDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
 
     [realm beginWriteTransaction];
 
+    // new random obj
     HWRandom *random = [HWRandom new];
-    random.randomDate = [NSDate date];
+    random.randomDate = nowDate;
     random.value = result;
 
-    [realm addObject:random];
+    RLMResults *originDayResult = [HWDayList objectsWhere:@"dayId = %@", dayId];
+    if (originDayResult.count > 0) {
+        HWDayList *originDayList = originDayResult[0];
+        [originDayList.randoms addObject:random];
+        [realm addOrUpdateObject:originDayList];
+    } else {
+        HWDayList *dayList = [HWDayList new];
+        dayList.dayId = dayId;
+        dayList.dateStr = [nowDate formattedDateWithFormat:@"yyyy-MM-dd"];
+        [dayList.randoms addObject:random];
+
+        [realm addOrUpdateObject:dayList];
+    }
+
     [realm commitWriteTransaction];
 
     [NSUserDefaults cacheMinRandomValue:self.fldMin.text maxValue:self.fldMax.text];
@@ -193,6 +210,7 @@
     label.frame = CGRectMake(0, 0, 80, 30);
     textField.leftView = label;
     textField.leftViewMode = UITextFieldViewModeAlways;
+    textField.clearButtonMode = UITextFieldViewModeAlways;
 
     textField.layer.borderWidth = 1.5f;
     textField.layer.borderColor = [UIColor lightGrayColor].CGColor;

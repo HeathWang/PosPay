@@ -11,12 +11,15 @@
 #import "HWRandomHistoryCell.h"
 #import "RLMResults.h"
 #import "HWRandom.h"
+#import "HWDayList.h"
+#import "HWDaySectionHeader.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) HWRandomView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) RLMResults<HWRandom *> *historyList;
+@property (nonatomic, strong) RLMResults<HWDayList *> *historyList;
 @property (nonatomic, strong) RLMNotificationToken *token;
 
 @end
@@ -24,6 +27,7 @@
 @implementation HWRandomMainController
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
     [self setupNav];
     [self setupData];
@@ -36,6 +40,7 @@
 
 - (void)setupView {
     [self.view addSubview:self.self.tableView];
+    self.tableView.tableHeaderView = self.headerView;
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(@0);
         make.top.equalTo(@0);
@@ -43,10 +48,10 @@
 }
 
 - (void)setupData {
-    self.historyList = [[HWRandom allObjects] sortedResultsUsingKeyPath:@"randomDate" ascending:NO];
+    self.historyList = [[HWDayList allObjects] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
 
     __weak typeof(self) weakSelf = self;
-    self.token = [self.historyList addNotificationBlock:^(RLMResults<HWRandom *> *results, RLMCollectionChange *change, NSError *error) {
+    self.token = [self.historyList addNotificationBlock:^(RLMResults<HWDayList *> *results, RLMCollectionChange *change, NSError *error) {
         UITableView *tableView1 = weakSelf.tableView;
 
         if (!change) {
@@ -54,15 +59,13 @@
             return;
         }
 
-        // Query results have changed, so apply them to the UITableView
         [tableView1 beginUpdates];
-        [tableView1 deleteRowsAtIndexPaths:[change deletionsInSection:0]
-                         withRowAnimation:UITableViewRowAnimationFade];
-        [tableView1 insertRowsAtIndexPaths:[change insertionsInSection:0]
-                         withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView1 reloadRowsAtIndexPaths:[change modificationsInSection:0]
-                         withRowAnimation:UITableViewRowAnimationAutomatic];
+        for (NSNumber *section in change.modifications) {
+            [tableView1 reloadSection:section.integerValue withRowAnimation:UITableViewRowAnimationFade];
+        }
+
         [tableView1 endUpdates];
+
     }];
 }
 
@@ -77,7 +80,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 230;
+    return 30;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -85,20 +88,28 @@
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    HWRandomView *randomView1 = [tableView dequeueReusableHeaderFooterViewWithClass:HWRandomView.class];
-    return randomView1;
+    HWDaySectionHeader *sectionHeader = [tableView dequeueReusableHeaderFooterViewWithClass:HWDaySectionHeader.class];
+    HWDayList *dayList = self.historyList[section];
+    sectionHeader.lblTitle.text = dayList.dateStr;
+    return sectionHeader;
 }
 
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.historyList.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    HWDayList *dayList = self.historyList[section];
+    return dayList.randoms.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWRandomHistoryCell *cell = [tableView dequeueReusableCellWithClass:HWRandomHistoryCell.class];
-    HWRandom *hwRandom = self.historyList[indexPath.row];
+    HWDayList *dayList = self.historyList[indexPath.section];
+    HWRandom *hwRandom = dayList.randoms[indexPath.row];
     [cell updateCell:hwRandom];
     return cell;
 }
@@ -108,7 +119,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    HWRandom *hwRandom = self.historyList[indexPath.row];
+    HWDayList *dayList = self.historyList[indexPath.section];
+    HWRandom *hwRandom = dayList.randoms[indexPath.row];
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [realm deleteObject:hwRandom];
@@ -131,13 +143,21 @@
         _tableView.tableFooterView = [UIView new];
 
         [_tableView registerClass:HWRandomHistoryCell.class];
-        [_tableView registerHeaderFooterClass:HWRandomView.class];
+        [_tableView registerHeaderFooterClass:HWDaySectionHeader.class];
 
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
     return _tableView;
 }
+
+- (HWRandomView *)headerView {
+    if (!_headerView) {
+        _headerView = [[HWRandomView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 230)];
+    }
+    return _headerView;
+}
+
 
 - (void)dealloc {
     [self.token invalidate];

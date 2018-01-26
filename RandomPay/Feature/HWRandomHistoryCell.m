@@ -52,8 +52,8 @@
 
 
 - (void)updateCell:(HWRandom *)random {
-    self.lblDate.text = [random.randomDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-    self.lblValue.text = [NSString stringWithFormat:@"%.1f", random.value.floatValue];
+    self.lblDate.text = [random.randomDate formattedDateWithFormat:@"HH:mm:ss"];
+    self.lblValue.text = [NSString stringWithFormat:@"%.1f ¥", random.value.floatValue];
 }
 
 #pragma mark - Getter

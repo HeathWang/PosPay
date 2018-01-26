@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HWRandomView : UITableViewHeaderFooterView
+@interface HWRandomView : UIView
 
 @end
