@@ -155,7 +155,7 @@
     NSNumber *result = [HWRandom getUniqueRandomFrom:self.fldMin.text.integerValue to:self.fldMax.text.integerValue ignoreDigits:self.switchDigits.on hasDecimals:self.switchDecimals.on];
 
     RLMRealm *realm = [RLMRealm defaultRealm];
-    NSDate *nowDate = [[NSDate date] dateByAddingDays:1];
+    NSDate *nowDate = [NSDate date];
     NSNumber *dayId = @([nowDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
 
     [realm beginWriteTransaction];
@@ -198,6 +198,7 @@
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
     [realm deleteObjects:[HWRandom allObjects]];
+    [realm deleteObjects:[HWDayList allObjects]];
     [realm commitWriteTransaction];
 }
 

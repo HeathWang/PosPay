@@ -54,7 +54,7 @@
     self.token = [self.historyList addNotificationBlock:^(RLMResults<HWDayList *> *results, RLMCollectionChange *change, NSError *error) {
         UITableView *tableView1 = weakSelf.tableView;
 
-        if (!change) {
+        if (!change || tableView1.numberOfSections <= 0 || change.deletions.count > 0) {
             [tableView1 reloadData];
             return;
         }
