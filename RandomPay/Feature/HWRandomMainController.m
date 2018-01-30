@@ -53,6 +53,8 @@
     __weak typeof(self) weakSelf = self;
     self.token = [self.historyList addNotificationBlock:^(RLMResults<HWDayList *> *results, RLMCollectionChange *change, NSError *error) {
         UITableView *tableView1 = weakSelf.tableView;
+        
+//        NSLog(@"%@ %@ %@", change.modifications, change.insertions, change.deletions);
 
         if (!change || tableView1.numberOfSections <= 0 || change.deletions.count > 0) {
             [tableView1 reloadData];
@@ -60,8 +62,17 @@
         }
 
         [tableView1 beginUpdates];
+        
         for (NSNumber *section in change.modifications) {
             [tableView1 reloadSection:section.integerValue withRowAnimation:UITableViewRowAnimationFade];
+        }
+        
+        for (NSNumber *section in change.insertions) {
+            [tableView1 insertSection:section.integerValue withRowAnimation:UITableViewRowAnimationMiddle];
+        }
+        
+        for (NSNumber *section in change.deletions) {
+            [tableView1 deleteSection:section.integerValue withRowAnimation:UITableViewRowAnimationLeft];
         }
 
         [tableView1 endUpdates];
@@ -123,7 +134,14 @@
     HWRandom *hwRandom = dayList.randoms[indexPath.row];
     RLMRealm *realm = [RLMRealm defaultRealm];
     [realm beginWriteTransaction];
+    
+    // 如果已经没有当日数据，删除日数据
+    if (dayList.randoms.count == 1) {
+        [realm deleteObject:dayList];
+    }
+    
     [realm deleteObject:hwRandom];
+    
     [realm commitWriteTransaction];
 }
 
