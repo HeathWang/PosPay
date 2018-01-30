@@ -38,4 +38,9 @@
     return queryResults.count > 0;
 }
 
+
+- (NSNumber *)getPosValue {
+    return @(self.value.floatValue * 0.994);
+}
+
 @end

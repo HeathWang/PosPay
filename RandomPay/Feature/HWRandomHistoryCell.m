@@ -50,10 +50,9 @@
     // Configure the view for the selected state
 }
 
-
 - (void)updateCell:(HWRandom *)random {
     self.lblDate.text = [random.randomDate formattedDateWithFormat:@"HH:mm:ss"];
-    self.lblValue.text = [NSString stringWithFormat:@"%.1f ¥", random.value.floatValue];
+    self.lblValue.text = [NSString stringWithFormat:@"%.1f ➔ %.2f", random.value.floatValue, [random getPosValue].floatValue];
 }
 
 #pragma mark - Getter

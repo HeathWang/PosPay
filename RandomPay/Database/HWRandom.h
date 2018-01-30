@@ -15,6 +15,9 @@
 
 
 + (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals;
+
+- (NSNumber *)getPosValue;
+
 @end
 
 // This protocol enables typed collections. i.e.:
