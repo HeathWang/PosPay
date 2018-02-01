@@ -13,6 +13,8 @@
 #import "HWRandom.h"
 #import "HWDayList.h"
 #import "HWDaySectionHeader.h"
+#import "HWAddRecordController.h"
+#import "HWBaseNavigationController.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 
@@ -36,7 +38,7 @@
 
 - (void)setupNav {
     self.navigationItem.title = @"RANDOM";
-    UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(myRecordList)];
+    UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addRecordAction)];
     self.navigationItem.rightBarButtonItem = rightAdd;
 }
 
@@ -107,7 +109,6 @@
     return sectionHeader;
 }
 
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -158,6 +159,14 @@
         [realm commitWriteTransaction];
     } else if (index == 1) {
         // edit action
+        HWAddRecordController *addRecordController = [HWAddRecordController new];
+        addRecordController.isEdit = YES;
+        addRecordController.rid = hwRandom.rid;
+
+        HWBaseNavigationController *nav = [[HWBaseNavigationController alloc] initWithRootViewController:addRecordController];
+        [self.navigationController presentViewController:nav animated:YES completion:^{
+
+        }];
     }
 
     return YES;
@@ -171,8 +180,12 @@
 #pragma mark - touch action
 
 
-- (void)myRecordList {
+- (void)addRecordAction {
+    HWAddRecordController *addRecordController = [HWAddRecordController new];
+    HWBaseNavigationController *nav = [[HWBaseNavigationController alloc] initWithRootViewController:addRecordController];
+    [self.navigationController presentViewController:nav animated:YES completion:^{
 
+    }];
 }
 
 #pragma mark - Getter
