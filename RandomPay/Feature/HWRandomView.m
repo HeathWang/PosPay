@@ -8,12 +8,12 @@
 
 #import "HWRandomView.h"
 #import "MBProgressHUD+VBAdd.h"
-#import "NSNumber+Random.h"
 #import "RLMRealm.h"
 #import "HWRandom.h"
 #import "NSUserDefaults+HWCache.h"
 #import "HWDayList.h"
 #import "DateTools.h"
+#import "UITextField+Addition.h"
 
 @interface HWRandomView ()
 
@@ -78,7 +78,7 @@
     [self addSubview:self.lblHasDecimals];
     [self addSubview:self.switchDecimals];
 
-    [self addSubview:self.btnClean];
+//    [self addSubview:self.btnClean];
 
     [self.lblRandom mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
@@ -124,11 +124,11 @@
         make.top.equalTo(self.switchDigits.mas_bottom).offset(5);
     }];
 
-    [self.btnClean mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(60, 34));
-        make.right.equalTo(@-5);
-        make.bottom.equalTo(@-5);
-    }];
+//    [self.btnClean mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.size.mas_equalTo(CGSizeMake(60, 34));
+//        make.right.equalTo(@-5);
+//        make.bottom.equalTo(@-5);
+//    }];
 }
 
 #pragma mark - touch action
@@ -205,17 +205,7 @@
 #pragma mark - private method
 
 - (UITextField *)createTextFieldWithTitle:(NSString *)title {
-    UITextField *textField = [[UITextField alloc] init];
-    textField.keyboardType = UIKeyboardTypeNumberPad;
-    UILabel *label = [UILabel labelWithAlignment:NSTextAlignmentCenter textColor:[UIColor lightGrayColor] font:[UIFont systemFontOfSize:14] text:title];
-    label.frame = CGRectMake(0, 0, 80, 30);
-    textField.leftView = label;
-    textField.leftViewMode = UITextFieldViewModeAlways;
-    textField.clearButtonMode = UITextFieldViewModeAlways;
-
-    textField.layer.borderWidth = 1.5f;
-    textField.layer.borderColor = [UIColor lightGrayColor].CGColor;
-
+    UITextField *textField = [UITextField textFieldWithLeftTitle:title keyboardType:UIKeyboardTypeNumberPad];
     return textField;
 }
 

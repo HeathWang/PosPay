@@ -13,9 +13,13 @@
 
 // Specify default values for properties
 
++ (nullable NSString *)primaryKey {
+    return @"rid";
+}
+
 + (NSDictionary *)defaultPropertyValues
 {
-    return @{@"value": @0};
+    return @{@"value": @0, @"rid": [NSUUID UUID].UUIDString};
 }
 
 // Specify properties to ignore (Realm won't persist these)

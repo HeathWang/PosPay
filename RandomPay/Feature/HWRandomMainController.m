@@ -36,6 +36,8 @@
 
 - (void)setupNav {
     self.navigationItem.title = @"RANDOM";
+    UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(myRecordList)];
+    self.navigationItem.rightBarButtonItem = rightAdd;
 }
 
 - (void)setupView {
@@ -152,6 +154,10 @@
 
 #pragma mark - touch action
 
+
+- (void)myRecordList {
+
+}
 
 #pragma mark - Getter
 
