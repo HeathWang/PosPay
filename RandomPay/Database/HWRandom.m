@@ -19,7 +19,10 @@
 
 + (NSDictionary *)defaultPropertyValues
 {
-    return @{@"value": @0, @"rid": [NSUUID UUID].UUIDString};
+    return @{@"value": @0,
+            @"rid": [NSUUID UUID].UUIDString,
+            @"costPercent": @0.006F,
+            @"bankType": @(0)};
 }
 
 // Specify properties to ignore (Realm won't persist these)

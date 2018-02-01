@@ -10,6 +10,8 @@
 #import "HWBaseNavigationController.h"
 #import "HWRandomMainController.h"
 #import "IQKeyboardManager.h"
+#import "RLMRealmConfiguration.h"
+#import <RLMRealm.h>
 
 @interface AppDelegate ()
 
@@ -20,6 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self configRLMDatabase];
     [self initWindow];
     [self configKeyboardManager];
 
@@ -70,6 +73,21 @@
 - (void)configKeyboardManager {
     [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+}
+
+- (void)configRLMDatabase {
+
+    NSLog(@">>> %@", [RLMRealmConfiguration defaultConfiguration].fileURL);
+    RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
+    uint64_t version = 1;
+    configuration.schemaVersion = version;
+    configuration.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
+        if (oldSchemaVersion < version) {
+
+        }
+    };
+    [RLMRealmConfiguration setDefaultConfiguration:configuration];
+    [RLMRealm defaultRealm];
 }
 
 
