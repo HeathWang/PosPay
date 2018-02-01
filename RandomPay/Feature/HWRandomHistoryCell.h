@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell.h>
 
 @class HWRandom;
 
-@interface HWRandomHistoryCell : UITableViewCell
+@interface HWRandomHistoryCell : MGSwipeTableCell
 
 - (void)updateCell:(HWRandom *)random;
 @end

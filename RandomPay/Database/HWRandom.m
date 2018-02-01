@@ -22,7 +22,7 @@
     return @{@"value": @0,
             @"rid": [NSUUID UUID].UUIDString,
             @"costPercent": @0.006F,
-            @"bankType": @(0)};
+            @"bankType": @(1)};
 }
 
 // Specify properties to ignore (Realm won't persist these)

@@ -14,7 +14,7 @@
 #import "HWDayList.h"
 #import "HWDaySectionHeader.h"
 
-@interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate>
+@interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 
 @property (nonatomic, strong) HWRandomView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -89,7 +89,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44;
+    return 60;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -121,34 +121,50 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWRandomHistoryCell *cell = [tableView dequeueReusableCellWithClass:HWRandomHistoryCell.class];
+    cell.delegate = self;
     HWDayList *dayList = self.historyList[indexPath.section];
     HWRandom *hwRandom = dayList.randoms[indexPath.row];
     [cell updateCell:hwRandom];
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark - MGSwipeTableCellDelegate
+
+- (BOOL)swipeTableCell:(nonnull MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction fromPoint:(CGPoint)point {
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    HWDayList *dayList = self.historyList[indexPath.section];
-    HWRandom *hwRandom = dayList.randoms[indexPath.row];
-    RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    
-    // 如果已经没有当日数据，删除日数据
-    if (dayList.randoms.count == 1) {
-        [realm deleteObject:dayList];
-    }
-    
-    [realm deleteObject:hwRandom];
-    
-    [realm commitWriteTransaction];
+- (void)swipeTableCell:(nonnull MGSwipeTableCell *)cell didChangeSwipeState:(MGSwipeState)state gestureIsActive:(BOOL)gestureIsActive {
+
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewCellEditingStyleDelete;
+- (BOOL)swipeTableCell:(nonnull MGSwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL)fromExpansion {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+    HWDayList *dayList = self.historyList[(NSUInteger) indexPath.section];
+    HWRandom *hwRandom = dayList.randoms[(NSUInteger) indexPath.row];
+    RLMRealm *realm = [RLMRealm defaultRealm];
+
+    if (index == 0) {
+        // delete action
+        [realm beginWriteTransaction];
+
+        // 如果已经没有当日数据，删除日数据
+        if (dayList.randoms.count == 1) {
+            [realm deleteObject:dayList];
+        }
+
+        [realm deleteObject:hwRandom];
+        [realm commitWriteTransaction];
+    } else if (index == 1) {
+        // edit action
+    }
+
+    return YES;
+}
+
+- (BOOL)swipeTableCell:(nonnull MGSwipeTableCell *)cell shouldHideSwipeOnTap:(CGPoint)point {
+    return YES;
 }
 
 

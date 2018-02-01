@@ -7,6 +7,7 @@ def sharedPods
     pod 'Realm'
     pod 'IQKeyboardManager'
     pod 'MBProgressHUD', '~> 0.9.2'
+    pod 'MGSwipeTableCell', '~> 1.6.6'
 end
 
 target 'RandomPay' do
