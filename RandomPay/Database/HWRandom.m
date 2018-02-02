@@ -21,7 +21,7 @@
 {
     return @{@"value": @0,
             @"rid": [NSUUID UUID].UUIDString,
-            @"costPercent": @0.006F,
+            @"costPercent": @0.006,
             @"bankType": @(1)};
 }
 
@@ -47,7 +47,7 @@
 
 
 - (NSNumber *)getPosValue {
-    return @(self.value.floatValue * 0.994);
+    return @(self.value.floatValue * (1 - self.costPercent.floatValue));
 }
 
 @end

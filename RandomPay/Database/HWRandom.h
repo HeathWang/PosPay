@@ -8,12 +8,6 @@
 
 #import <Realm/Realm.h>
 
-typedef NS_ENUM(NSUInteger, HWBankType) {
-    HWBankTypeZX = 1,   // 中信
-    HWBankTypeZS,   // 招商
-    HWBankTypePF,   // 浦发
-};
-
 @interface HWRandom : RLMObject
 
 @property NSString *rid;    //主键id

@@ -39,6 +39,11 @@
     [self setupView];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.fldAmount becomeFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -149,6 +154,7 @@
 }
 
 - (void)showSelectBank {
+    [self.view endEditing:YES];
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"中信", @"招商", @"浦发", nil];
     [sheet showInView:self.navigationController.view];
 }

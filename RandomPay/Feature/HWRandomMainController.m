@@ -15,6 +15,7 @@
 #import "HWDaySectionHeader.h"
 #import "HWAddRecordController.h"
 #import "HWBaseNavigationController.h"
+#import "HWSummaryController.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
 
@@ -40,6 +41,9 @@
     self.navigationItem.title = @"RANDOM";
     UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addRecordAction)];
     self.navigationItem.rightBarButtonItem = rightAdd;
+
+    UIBarButtonItem *summaryButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(viewSummaryAction)];
+    self.navigationItem.leftBarButtonItem = summaryButton;
 }
 
 - (void)setupView {
@@ -186,6 +190,11 @@
     [self.navigationController presentViewController:nav animated:YES completion:^{
 
     }];
+}
+
+- (void)viewSummaryAction {
+    HWSummaryController *summaryController = [HWSummaryController new];
+    [self.navigationController pushViewController:summaryController animated:YES];
 }
 
 #pragma mark - Getter
