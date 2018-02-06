@@ -10,6 +10,8 @@
 		7E066C2C2022B203001C38B6 /* UITextField+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C2B2022B203001C38B6 /* UITextField+Addition.m */; };
 		7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */; };
 		7E066C3220231292001C38B6 /* HWSummaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C3120231292001C38B6 /* HWSummaryController.m */; };
+		7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */; };
+		7E6BB3F92028459C00E99EEE /* HWSummaryMonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */; };
 		7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29F992015ABCE00336040 /* AppDelegate.m */; };
 		7EA29FA22015ABCE00336040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA12015ABCE00336040 /* Assets.xcassets */; };
 		7EA29FA52015ABCE00336040 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA32015ABCE00336040 /* LaunchScreen.storyboard */; };
@@ -43,6 +45,10 @@
 		7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWAddRecordController.m; sourceTree = "<group>"; };
 		7E066C3020231292001C38B6 /* HWSummaryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWSummaryController.h; sourceTree = "<group>"; };
 		7E066C3120231292001C38B6 /* HWSummaryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWSummaryController.m; sourceTree = "<group>"; };
+		7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWHalfYearSummaryCell.h; sourceTree = "<group>"; };
+		7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWHalfYearSummaryCell.m; sourceTree = "<group>"; };
+		7E6BB3F72028459C00E99EEE /* HWSummaryMonthModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWSummaryMonthModel.h; sourceTree = "<group>"; };
+		7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWSummaryMonthModel.m; sourceTree = "<group>"; };
 		7EA29F952015ABCE00336040 /* RandomPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA29F982015ABCE00336040 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7EA29F992015ABCE00336040 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -101,6 +107,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E6BB3F62028457B00E99EEE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7E6BB3F72028459C00E99EEE /* HWSummaryMonthModel.h */,
+				7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7EA29F8C2015ABCE00336040 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +137,7 @@
 		7EA29F972015ABCE00336040 /* RandomPay */ = {
 			isa = PBXGroup;
 			children = (
+				7E6BB3F62028457B00E99EEE /* Model */,
 				7EA29FDF2015D37200336040 /* Database */,
 				7EA29FB32015B10000336040 /* Feature */,
 				7EA29FB22015B10000336040 /* Tools */,
@@ -183,6 +199,8 @@
 				7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */,
 				7E066C3020231292001C38B6 /* HWSummaryController.h */,
 				7E066C3120231292001C38B6 /* HWSummaryController.m */,
+				7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */,
+				7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -349,12 +367,14 @@
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
 				7E066C3220231292001C38B6 /* HWSummaryController.m in Sources */,
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
+				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,
 				7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
 				7EA29FBF2015B3DE00336040 /* BaseViewController.m in Sources */,
 				7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */,
 				7EA29FA82015ABCE00336040 /* main.m in Sources */,
 				7EA29FB92015B1E000336040 /* HWBaseNavigationController.m in Sources */,
+				7E6BB3F92028459C00E99EEE /* HWSummaryMonthModel.m in Sources */,
 				7EA29FD52015B6A600336040 /* UIImage+Addition.m in Sources */,
 				7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */,
 				7EA29FCA2015B65B00336040 /* UITableView+Addition.m in Sources */,

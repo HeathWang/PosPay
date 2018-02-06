@@ -140,6 +140,7 @@
     self.lblDateSelect.text = [NSString stringWithFormat:@"日期：%@", [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
     self.lblBank.text = [NSString stringWithFormat:@"银行类型：%@", self.bankList[(NSUInteger) self.typeNumber.integerValue]];
     self.lblCost.text = [NSString stringWithFormat:@"费率：%.2f%%", self.sliderCost.value];
+    self.datePicker.date = self.selectDate;
 }
 
 #pragma mark - touch action
@@ -171,6 +172,11 @@
 
     RLMRealm *realm = [RLMRealm defaultRealm];
 
+    NSDate *previousDate = [self.random.randomDate copy];
+    NSNumber *previousDayId = @([previousDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
+
+    NSNumber *dayId = @([self.selectDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
+
     if (self.isEdit) {
         [realm beginWriteTransaction];
 
@@ -178,14 +184,42 @@
         self.random.costPercent = @(self.sliderCost.value / 100.00f);
         self.random.randomDate = self.selectDate;
         self.random.value = @(self.fldAmount.text.floatValue);
-        [realm addOrUpdateObject:self.random];
+
+        if ([previousDate isSameDay:self.selectDate]) {
+            [realm addOrUpdateObject:self.random];
+        } else {
+            HWDayList *preDay = [HWDayList objectForPrimaryKey:previousDayId];
+            NSInteger index = [preDay.randoms indexOfObjectWhere:@"rid = %@", self.random.rid];
+            if (index != NSNotFound) {
+                [preDay.randoms removeObjectAtIndex:index];
+
+                if (preDay.randoms.count <= 0) {
+                    [realm deleteObject:preDay];
+                } else {
+                    [realm addOrUpdateObject:preDay];
+                }
+
+            }
+
+            RLMResults *originDayResult = [HWDayList objectsWhere:@"dayId = %@", dayId];
+            if (originDayResult.count > 0) {
+                HWDayList *originDayList = originDayResult[0];
+                [originDayList.randoms addObject:self.random];
+                [realm addOrUpdateObject:originDayList];
+            } else {
+                HWDayList *dayList = [HWDayList new];
+                dayList.dayId = dayId;
+                dayList.dateStr = [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd"];
+                [dayList.randoms addObject:self.random];
+
+                [realm addOrUpdateObject:dayList];
+            }
+        }
 
         [realm commitWriteTransaction];
 
         [self closeAction];
     } else {
-
-        NSNumber *dayId = @([self.selectDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
 
         HWRandom *random1 = [HWRandom new];
         random1.randomDate = self.selectDate;
