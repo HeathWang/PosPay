@@ -43,6 +43,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"SUMMARY";
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadUI)];
+    self.navigationItem.rightBarButtonItem = rightItem;
     [self setupView];
     [self setupData];
 }
@@ -104,17 +106,20 @@
         }
 
         [self fetchMonthData];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.lblTotal.attributedText = [self updateLabel:@"总金额：" value:self.total];
             self.lblCost.attributedText = [self updateLabel:@"总消耗：" value:self.cost];
-
+            
             [self.pieChart updateChartData:items];
             [self.pieChart strokeChart];
-
+            
             [self.tableView reloadData];
         });
 
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        });
     });
 
 }
@@ -122,6 +127,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - touch action
+
+- (void)reloadUI {
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate
@@ -167,7 +178,7 @@
 
 - (void)fetchMonthData {
     NSDate *nowDate = [NSDate date];
-    self.barDataSource = [NSMutableArray arrayWithCapacity:3];
+    NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:3];
     NSArray *bankList = @[@"中信", @"招商", @"浦发"];
 
     for (int i = 0; i < 3; i ++) {
@@ -201,9 +212,10 @@
         monthModel.xLabels = monthNames;
         NSLog(@">%@", monthModel);
 
-        [self.barDataSource addObject:monthModel];
+        [dataSource addObject:monthModel];
 
     }
+    self.barDataSource = dataSource;
 
 
 }

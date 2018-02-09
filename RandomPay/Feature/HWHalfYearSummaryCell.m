@@ -44,10 +44,16 @@
 
     self.barChart.yValues = summaryMonth.yValues;
     [self.barChart strokeChart];
+//    if (!summaryMonth.hasStroke) {
+//
+//        summaryMonth.hasStroke = YES;
+//    }
     self.barChart.xLabels = summaryMonth.xLabels;
     for (PNBar *bar in self.barChart.bars) {
         bar.textLayer.fontSize = 12;
     }
+
+
 }
 
 - (void)awakeFromNib {
