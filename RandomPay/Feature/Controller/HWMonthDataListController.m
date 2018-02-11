@@ -33,7 +33,7 @@
 }
 
 - (void)setupData {
-    self.dataList = [HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@ AND bankType = %@", self.dateRange.beginDate, self.dateRange.endDate, self.bankType];
+    self.dataList = [[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@ AND bankType = %@", self.dateRange.beginDate, self.dateRange.endDate, self.bankType] sortedResultsUsingKeyPath:@"randomDate" ascending:NO];
 }
 
 - (void)setupView {
