@@ -14,6 +14,7 @@
 #import "DateTools.h"
 #import "HWSummaryMonthModel.h"
 #import "HWDateRangeModel.h"
+#import "HWMonthDataListController.h"
 
 @interface HWSummaryController () <UITableViewDataSource, UITableViewDelegate, HalfYearSummaryCellDelegate>
 
@@ -172,6 +173,14 @@
 
 - (void)yearSummaryCell:(HWHalfYearSummaryCell *)cell didTapBarAtIndex:(NSInteger)index {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSNumber *bankType = @(indexPath.row + 1);
+    HWDateRangeModel *dateRangeModel = self.dateRangeList[(NSUInteger) index];
+
+    HWMonthDataListController *monthDataListController = [HWMonthDataListController new];
+    monthDataListController.bankType = bankType;
+    monthDataListController.dateRange = dateRangeModel;
+
+    [self.navigationController pushViewController:monthDataListController animated:YES];
 }
 
 

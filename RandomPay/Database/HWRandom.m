@@ -27,10 +27,10 @@
 
 // Specify properties to ignore (Realm won't persist these)
 
-//+ (NSArray *)ignoredProperties
-//{
-//    return @[];
-//}
++ (NSArray *)ignoredProperties
+{
+    return @[@"isDetail"];
+}
 
 + (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals {
     NSNumber *result = [NSNumber randomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];

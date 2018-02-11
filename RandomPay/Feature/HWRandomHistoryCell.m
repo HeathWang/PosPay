@@ -91,9 +91,17 @@
             break;
     }
 
-    self.lblDate.text = [random.randomDate formattedDateWithFormat:@"HH:mm:ss"];
+    if (random.isDetail) {
+        self.lblDate.text = [random.randomDate formattedDateWithFormat:@"yy-MM-dd HH:mm:ss"];
+    } else {
+        self.lblDate.text = [random.randomDate formattedDateWithFormat:@"HH:mm:ss"];
+    }
+
     self.lblValue.text = [NSString stringWithFormat:@"%.1f ➔ %.2f", random.value.floatValue, [random getPosValue].floatValue];
     self.lblCostPercent.text = [NSString stringWithFormat:@"%.2f%%", (random.costPercent.floatValue * 100)];
+
+    if (random.isDetail)
+        return;
 
     self.rightButtons = @[[MGSwipeButton buttonWithTitle:@"DELETE" backgroundColor:[UIColor colorWithRed:1.000 green:0.231 blue:0.188 alpha:1.00]],
             [MGSwipeButton buttonWithTitle:@"EDIT" backgroundColor:[UIColor colorWithRed:0.231 green:0.600 blue:0.988 alpha:1.00]]];
