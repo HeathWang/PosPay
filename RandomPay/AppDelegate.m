@@ -25,6 +25,7 @@
     [self configRLMDatabase];
     [self initWindow];
     [self configKeyboardManager];
+    [self configGlobalUI];
 
     return YES;
 }
@@ -88,6 +89,15 @@
     };
     [RLMRealmConfiguration setDefaultConfiguration:configuration];
     [RLMRealm defaultRealm];
+}
+
+- (void)configGlobalUI {
+    UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
+    barButtonItem.tintColor = kThemeColor;
+
+    [UITextField appearance].tintColor = kThemeColor;
+    [UISwitch appearance].tintColor = kThemeColor;
+    [UISlider appearance].tintColor = kThemeColor;
 }
 
 
