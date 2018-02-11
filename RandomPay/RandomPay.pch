@@ -28,6 +28,10 @@
 #define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
+#pragma mark - Color define
+
+#define kThemeColor         [UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00]
+
 #pragma mark - Screen width & height
 
 #define ScreenWidth     [UIScreen mainScreen].bounds.size.width

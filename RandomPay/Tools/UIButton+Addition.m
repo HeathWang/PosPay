@@ -7,6 +7,7 @@
 //
 
 #import <objc/runtime.h>
+#import "NSString+HWAdd.h"
 
 @implementation UIButton (Addition)
 
@@ -40,6 +41,16 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:normalImg forState:UIControlStateNormal];
     [button setImage:highlightedImg forState:UIControlStateHighlighted];
+    return button;
+}
+
++ (UIButton *)navButtonWithTitle:(NSString *)title font:(UIFont *)font titleColor:(UIColor *)titleColor {
+
+    CGSize size1 = [title sizeForFont:font size:CGSizeMake(CGFLOAT_MAX, 44) mode:NSLineBreakByWordWrapping];
+    UIButton *button = [UIButton buttonWithFont:font title:title textColor:titleColor];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    button.frame = CGRectMake(0, 0, size1.width + 2, 44);
+
     return button;
 }
 

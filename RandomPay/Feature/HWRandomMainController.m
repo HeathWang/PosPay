@@ -17,13 +17,14 @@
 #import "HWBaseNavigationController.h"
 #import "HWSummaryController.h"
 
-@interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate>
+@interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) HWRandomView *headerView;
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) RLMResults<HWDayList *> *historyList;
 @property (nonatomic, strong) RLMNotificationToken *token;
+@property (nonatomic, copy) NSNumber *filterType;
 
 @end
 
@@ -40,7 +41,11 @@
 - (void)setupNav {
     self.navigationItem.title = @"RANDOM";
     UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addRecordAction)];
-    self.navigationItem.rightBarButtonItem = rightAdd;
+
+    UIButton *filterButton = [UIButton navButtonWithTitle:@"筛选" font:[UIFont systemFontOfSize:16 weight:UIFontWeightMedium] titleColor:kThemeColor];
+    [filterButton addTarget:self action:@selector(filterAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *filterItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
+    self.navigationItem.rightBarButtonItems = @[rightAdd, filterItem];
 
     UIBarButtonItem *summaryButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(viewSummaryAction)];
     self.navigationItem.leftBarButtonItem = summaryButton;
@@ -56,12 +61,18 @@
 }
 
 - (void)setupData {
+    self.filterType = @0;
     self.historyList = [[HWDayList allObjects] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
 
+    [self addDataBaseObserver];
+
+}
+
+- (void)addDataBaseObserver {
     __weak typeof(self) weakSelf = self;
     self.token = [self.historyList addNotificationBlock:^(RLMResults<HWDayList *> *results, RLMCollectionChange *change, NSError *error) {
         UITableView *tableView1 = weakSelf.tableView;
-        
+
 //        NSLog(@"%@ %@ %@", change.modifications, change.insertions, change.deletions);
 
         if (!change || tableView1.numberOfSections <= 0 || change.deletions.count > 0) {
@@ -70,15 +81,15 @@
         }
 
         [tableView1 beginUpdates];
-        
+
         for (NSNumber *section in change.modifications) {
             [tableView1 reloadSection:section.integerValue withRowAnimation:UITableViewRowAnimationFade];
         }
-        
+
         for (NSNumber *section in change.insertions) {
             [tableView1 insertSection:section.integerValue withRowAnimation:UITableViewRowAnimationMiddle];
         }
-        
+
         for (NSNumber *section in change.deletions) {
             [tableView1 deleteSection:section.integerValue withRowAnimation:UITableViewRowAnimationLeft];
         }
@@ -121,14 +132,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     HWDayList *dayList = self.historyList[section];
-    return dayList.randoms.count;
+    if (self.filterType.integerValue == 0) {
+        return dayList.randoms.count;
+    } else{
+        return [dayList.randoms objectsWhere:@"bankType = %@", self.filterType].count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWRandomHistoryCell *cell = [tableView dequeueReusableCellWithClass:HWRandomHistoryCell.class];
     cell.delegate = self;
     HWDayList *dayList = self.historyList[indexPath.section];
-    HWRandom *hwRandom = dayList.randoms[indexPath.row];
+
+    HWRandom *hwRandom;
+    if (self.filterType.integerValue == 0) {
+        hwRandom = dayList.randoms[indexPath.row];
+    } else {
+        hwRandom = [dayList.randoms objectsWhere:@"bankType = %@", self.filterType][indexPath.row];
+    }
+
     [cell updateCell:hwRandom];
     return cell;
 }
@@ -147,7 +169,14 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
     HWDayList *dayList = self.historyList[(NSUInteger) indexPath.section];
-    HWRandom *hwRandom = dayList.randoms[(NSUInteger) indexPath.row];
+
+    HWRandom *hwRandom;
+    if (self.filterType.integerValue == 0) {
+        hwRandom = dayList.randoms[(NSUInteger) indexPath.row];
+    } else {
+        hwRandom = [dayList.randoms objectsWhere:@"bankType = %@", self.filterType][indexPath.row];
+    }
+
     RLMRealm *realm = [RLMRealm defaultRealm];
 
     if (index == 0) {
@@ -181,6 +210,23 @@
 }
 
 
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex >= 4) return;
+    if (buttonIndex == 0) {
+        self.historyList = [[HWDayList allObjects] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
+        [self addDataBaseObserver];
+    } else {
+        self.historyList = [[[HWDayList allObjects] objectsWhere:@"ANY randoms.bankType = %@", @(buttonIndex)] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
+        [self addDataBaseObserver];
+    }
+    self.filterType = @(buttonIndex);
+
+    [self.tableView reloadData];
+}
+
+
 #pragma mark - touch action
 
 
@@ -190,6 +236,12 @@
     [self.navigationController presentViewController:nav animated:YES completion:^{
 
     }];
+}
+
+- (void)filterAction {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行类型" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"全部", @"中信", @"招商", @"浦发", nil];
+    [sheet showInView:self.navigationController.view];
+
 }
 
 - (void)viewSummaryAction {

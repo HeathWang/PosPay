@@ -41,7 +41,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.fldAmount becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -306,8 +305,8 @@
     if (!_datePicker) {
         _datePicker = [[UIDatePicker alloc] init];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _datePicker.minimumDate = [[NSDate date] dateByAddingMonths:-1];
-        _datePicker.maximumDate = [[NSDate date] dateByAddingDays:15];
+        _datePicker.minimumDate = [[NSDate date] dateByAddingYears:-1];
+        _datePicker.maximumDate = [[NSDate date] dateByAddingMonths:1];
 
         [_datePicker addTarget:self action:@selector(datePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
     }

@@ -64,6 +64,8 @@
 + (instancetype)buttonWithNormalImage:(UIImage *)normalImg
                      highlightedImage:(UIImage *)highlightedImg;
 
+
++ (UIButton *)navButtonWithTitle:(NSString *)title font:(UIFont *)font titleColor:(UIColor *)titleColor;
 @end
 
 
