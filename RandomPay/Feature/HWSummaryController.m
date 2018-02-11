@@ -13,8 +13,9 @@
 #import "HWHalfYearSummaryCell.h"
 #import "DateTools.h"
 #import "HWSummaryMonthModel.h"
+#import "HWDateRangeModel.h"
 
-@interface HWSummaryController () <UITableViewDataSource, UITableViewDelegate>
+@interface HWSummaryController () <UITableViewDataSource, UITableViewDelegate, HalfYearSummaryCellDelegate>
 
 // data
 @property (nonatomic, copy) NSNumber *total;
@@ -25,6 +26,7 @@
 @property (nonatomic, copy) NSNumber *pfTotal;
 
 @property (nonatomic, strong) NSMutableArray *barDataSource;
+@property (nonatomic, copy) NSArray<HWDateRangeModel *> *dateRangeList;
 
 // ui
 @property (nonatomic, strong) UILabel *lblTotal;
@@ -162,7 +164,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWHalfYearSummaryCell *summaryCell = [tableView dequeueReusableCellWithClass:HWHalfYearSummaryCell.class forIndexPath:indexPath];
     [summaryCell updateSummaryCell:self.barDataSource[indexPath.row]];
+    summaryCell.delegate = self;
     return summaryCell;
+}
+
+#pragma mark - HalfYearSummaryCellDelegate
+
+- (void)yearSummaryCell:(HWHalfYearSummaryCell *)cell didTapBarAtIndex:(NSInteger)index {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 }
 
 
@@ -177,7 +186,6 @@
 }
 
 - (void)fetchMonthData {
-    NSDate *nowDate = [NSDate date];
     NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:3];
     NSArray *bankList = @[@"中信", @"招商", @"浦发"];
 
@@ -186,18 +194,13 @@
         NSMutableArray *valueList = [NSMutableArray arrayWithCapacity:6];
         NSMutableArray *monthNames = [NSMutableArray arrayWithCapacity:6];
 
-        for (int j = 5; j >= 0; j --) {
-            NSDate *lessDate = [nowDate dateByAddingMonths:-j];
-
-            NSDate *beginDate = [NSDate dateWithYear:lessDate.year month:lessDate.month day:1];
-
-            NSDate *nextMonth = [lessDate dateByAddingMonths:1];
-            NSDate *lastDate = [[NSDate dateWithYear:nextMonth.year month:nextMonth.month day:1] dateByAddingSeconds:-1];
-
-//            NSLog(@"%@ %@", [beginDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"], [lastDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]);
+        for (int j = 0; j <= 5; j ++) {
+            HWDateRangeModel *dateRangeModel = self.dateRangeList[j];
+            NSDate *beginDate = dateRangeModel.beginDate;
+            NSDate *lastDate = dateRangeModel.endDate;
 
             NSNumber *total = [[[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@", beginDate, lastDate] objectsWhere:@"bankType == %@", @(i + 1)] sumOfProperty:@"value"];
-            [monthNames addObject:[beginDate formattedDateWithFormat:@"MM月"]];
+            [monthNames addObject:[beginDate formattedDateWithFormat:@"yy/MM"]];
 
             if (total) {
                 [valueList addObject:total];
@@ -210,7 +213,7 @@
         monthModel.typeName = bankList[i];
         monthModel.yValues = valueList;
         monthModel.xLabels = monthNames;
-        NSLog(@">%@", monthModel);
+//        NSLog(@">%@", monthModel);
 
         [dataSource addObject:monthModel];
 
@@ -264,6 +267,31 @@
 
     }
     return _tableView;
+}
+
+- (NSArray<HWDateRangeModel *> *)dateRangeList {
+    if (!_dateRangeList) {
+        NSDate *nowDate = [NSDate date];
+        NSMutableArray<HWDateRangeModel *> *tmpList = [NSMutableArray arrayWithCapacity:6];
+
+        for (int j = 5; j >= 0; j --) {
+            NSDate *lessDate = [nowDate dateByAddingMonths:-j];
+
+            NSDate *beginDate = [NSDate dateWithYear:lessDate.year month:lessDate.month day:1];
+
+            NSDate *nextMonth = [lessDate dateByAddingMonths:1];
+            NSDate *lastDate = [[NSDate dateWithYear:nextMonth.year month:nextMonth.month day:1] dateByAddingSeconds:-1];
+
+            NSLog(@"%@ %@", [beginDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"], [lastDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]);
+            HWDateRangeModel *dateRangeModel = [HWDateRangeModel new];
+            dateRangeModel.beginDate = beginDate;
+            dateRangeModel.endDate = lastDate;
+            [tmpList addObject:dateRangeModel];
+        }
+
+        _dateRangeList = tmpList;
+    }
+    return _dateRangeList;
 }
 
 

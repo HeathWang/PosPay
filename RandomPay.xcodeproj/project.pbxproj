@@ -13,6 +13,7 @@
 		7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */; };
 		7E6BB3F92028459C00E99EEE /* HWSummaryMonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */; };
 		7E6BB3FC202FDE3A00E99EEE /* NSString+HWAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3FB202FDE3A00E99EEE /* NSString+HWAdd.m */; };
+		7E6BB3FF2030241C00E99EEE /* HWDateRangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */; };
 		7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29F992015ABCE00336040 /* AppDelegate.m */; };
 		7EA29FA22015ABCE00336040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA12015ABCE00336040 /* Assets.xcassets */; };
 		7EA29FA52015ABCE00336040 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA32015ABCE00336040 /* LaunchScreen.storyboard */; };
@@ -52,6 +53,8 @@
 		7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWSummaryMonthModel.m; sourceTree = "<group>"; };
 		7E6BB3FA202FDE3A00E99EEE /* NSString+HWAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+HWAdd.h"; sourceTree = "<group>"; };
 		7E6BB3FB202FDE3A00E99EEE /* NSString+HWAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+HWAdd.m"; sourceTree = "<group>"; };
+		7E6BB3FD2030241C00E99EEE /* HWDateRangeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWDateRangeModel.h; sourceTree = "<group>"; };
+		7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDateRangeModel.m; sourceTree = "<group>"; };
 		7EA29F952015ABCE00336040 /* RandomPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA29F982015ABCE00336040 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7EA29F992015ABCE00336040 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -115,6 +118,8 @@
 			children = (
 				7E6BB3F72028459C00E99EEE /* HWSummaryMonthModel.h */,
 				7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */,
+				7E6BB3FD2030241C00E99EEE /* HWDateRangeModel.h */,
+				7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,6 +376,7 @@
 				7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */,
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
 				7E066C3220231292001C38B6 /* HWSummaryController.m in Sources */,
+				7E6BB3FF2030241C00E99EEE /* HWDateRangeModel.m in Sources */,
 				7E6BB3FC202FDE3A00E99EEE /* NSString+HWAdd.m in Sources */,
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
 				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,

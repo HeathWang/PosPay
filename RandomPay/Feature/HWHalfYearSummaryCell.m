@@ -10,7 +10,7 @@
 #import "HWHalfYearSummaryCell.h"
 #import "HWSummaryMonthModel.h"
 
-@interface HWHalfYearSummaryCell ()
+@interface HWHalfYearSummaryCell () <PNChartDelegate>
 
 @property (nonatomic, strong) PNBarChart *barChart;
 @property (nonatomic, strong) UILabel *lblBank;
@@ -67,6 +67,17 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - PNChartDelegate
+
+- (void)userClickedOnBarAtIndex:(NSInteger)barIndex {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yearSummaryCell:didTapBarAtIndex:)]) {
+        [self.delegate yearSummaryCell:self didTapBarAtIndex:barIndex];
+    }
+}
+
+
+#pragma mark - Getter
+
 - (PNBarChart *)barChart {
     if (!_barChart) {
         _barChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth - 40, 220)];
@@ -77,6 +88,7 @@
         _barChart.chartMarginBottom = 5;
 //        _barChart.chartMarginLeft = 22;
         _barChart.barWidth = 42;
+        _barChart.delegate = self;
     }
     return _barChart;
 }
