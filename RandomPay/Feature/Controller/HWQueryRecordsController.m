@@ -13,11 +13,14 @@
 #import "HWRandomHistoryCell.h"
 #import "HWDaySectionHeader.h"
 #import "HWRandom.h"
+#import "EPEmptyDataProtocol.h"
+#import "HWAppConfig.h"
 
 @interface HWQueryRecordsController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) HWQueryOptionsView *optionsView;
+@property (nonatomic, strong) EPEmptyDataProtocol *emptyDataProtocol;
 
 // data filter
 @property (nonatomic, copy) NSDate *startDate;
@@ -44,11 +47,15 @@
 
 - (void)setupNav {
     self.navigationItem.title = @"查询";
+    UIButton *btnQuery = [UIButton navButtonWithTitle:@"查询" font:[UIFont systemFontOfSize:16 weight:UIFontWeightBold] titleColor:kThemeColor];
+    [btnQuery addTarget:self action:@selector(doQueryAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btnQuery];
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)setupData {
     NSDate *date = [NSDate date];
-    self.startDate = [NSDate dateWithYear:date.year month:date.month day:date.day hour:0 minute:0 second:0];
+    self.startDate = [NSDate dateWithYear:date.year month:date.month day:1 hour:0 minute:0 second:0];
     NSDate *nextMonth = [self.startDate dateByAddingMonths:1];
     self.endDate = [nextMonth dateByAddingSeconds:-1];
 
@@ -56,6 +63,7 @@
 
 - (void)setupView {
     [self.view addSubview:self.tableView];
+    self.emptyDataProtocol = [[EPEmptyDataProtocol alloc] initWithReferScrollView:self.tableView emptyText:@"暂无数据!"];
 
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
@@ -63,6 +71,29 @@
 
     self.tableView.tableHeaderView = self.optionsView;
     [self.optionsView updateSelectDate];
+}
+
+#pragma mark - touch action
+
+- (void)doQueryAction {
+    RLMResults<HWRandom *> *results1 = [[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@", self.startDate, self.endDate] sortedResultsUsingKeyPath:@"randomDate" ascending:YES];
+    if (self.optionsView.filterCostPercent != 0) {
+        NSNumber *costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) (self.optionsView.filterCostPercent - 1)];
+        results1 = [results1 objectsWhere:@"costPercent = %@", costPercent];
+    }
+
+    if (self.optionsView.filterBank != 0) {
+        results1 = [results1 objectsWhere:@"bankType = %@", @(self.optionsView.filterBank)];
+    }
+
+    if (self.optionsView.filterPosType != 0) {
+        results1 = [results1 objectsWhere:@"posType = %@", @(self.optionsView.filterPosType)];
+    }
+
+    self.results = results1;
+    [self.tableView reloadData];
+    self.emptyDataProtocol.shouldDisplay = self.results.count == 0;
+    self.emptyDataProtocol.verticalOffset = 100;
 }
 
 #pragma mark - UITableViewDelegate
@@ -85,7 +116,8 @@
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HWDaySectionHeader *sectionHeader = [tableView dequeueReusableHeaderFooterViewWithClass:HWDaySectionHeader.class];
-
+    NSNumber *total = [self.results sumOfProperty:@"value"];
+    sectionHeader.lblTitle.text = [NSString stringWithFormat:@"总金额：%.2f    总条数：%ld", total.floatValue, (long) self.results.count];
     return sectionHeader;
 }
 
@@ -104,6 +136,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWRandomHistoryCell *cell = [tableView dequeueReusableCellWithClass:HWRandomHistoryCell.class];
+    HWRandom *random1 = self.results[(NSUInteger) indexPath.row];
+    random1.isDetail = YES;
+    [cell updateCell:random1];
     return cell;
 }
 
