@@ -12,6 +12,8 @@
 #import "DateTools.h"
 #import "HWDayList.h"
 #import "HWTypeSelectView.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+VBAdd.h"
 
 @interface HWAddRecordController () <UIActionSheetDelegate>
 
@@ -170,6 +172,11 @@
 
 - (void)submitAction {
     [self.view endEditing:YES];
+
+    if (self.fldAmount.text.floatValue <= 0) {
+        [MBProgressHUD showInfo:@"金额必须大于0" toView:self.view hideDelay:1.5];
+        return;
+    }
 
     RLMRealm *realm = [RLMRealm defaultRealm];
 
