@@ -22,7 +22,9 @@
     return @{@"value": @0,
             @"rid": [NSUUID UUID].UUIDString,
             @"costPercent": @0.006,
-            @"bankType": @(1)};
+            @"bankType": @(1),
+            @"posType": @(1),
+            };
 }
 
 // Specify properties to ignore (Realm won't persist these)
@@ -34,9 +36,10 @@
 
 + (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals {
     NSNumber *result = [NSNumber randomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];
-    if ([HWRandom checkIfExists:result]) {
-        result = [HWRandom getUniqueRandomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];
-    }
+    // 移除查询是否重复的逻辑
+//    if ([HWRandom checkIfExists:result]) {
+//        result = [HWRandom getUniqueRandomFrom:from to:to ignoreDigits:ignoreDigits hasDecimals:hasDecimals];
+//    }
     return result;
 }
 

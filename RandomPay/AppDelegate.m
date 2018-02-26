@@ -80,11 +80,11 @@
 
     NSLog(@">>> %@", [RLMRealmConfiguration defaultConfiguration].fileURL);
     RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
-    uint64_t version = 2;
+    uint64_t version = 3;
     configuration.schemaVersion = version;
     configuration.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
         if (oldSchemaVersion < version) {
-
+            // do some action.
         }
     };
     [RLMRealmConfiguration setDefaultConfiguration:configuration];

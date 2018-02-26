@@ -222,16 +222,9 @@
 		7EA29FB32015B10000336040 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				7EAC04C52043AD460092D634 /* View */,
 				7E6BB4012030274400E99EEE /* Base */,
 				7E6BB4002030272400E99EEE /* Controller */,
-				7EA29FD62015BB7200336040 /* HWRandomView.h */,
-				7EA29FD72015BB7200336040 /* HWRandomView.m */,
-				7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */,
-				7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */,
-				7EA29FEC201B113C00336040 /* HWDaySectionHeader.h */,
-				7EA29FED201B113C00336040 /* HWDaySectionHeader.m */,
-				7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */,
-				7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -245,6 +238,29 @@
 				7EA29FEA201B075500336040 /* HWDayList.m */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		7EAC04C52043AD460092D634 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7EAC04C62043AD570092D634 /* Cell */,
+				7EA29FD62015BB7200336040 /* HWRandomView.h */,
+				7EA29FD72015BB7200336040 /* HWRandomView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7EAC04C62043AD570092D634 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7EA29FE32015D84E00336040 /* HWRandomHistoryCell.h */,
+				7EA29FE42015D84E00336040 /* HWRandomHistoryCell.m */,
+				7EA29FEC201B113C00336040 /* HWDaySectionHeader.h */,
+				7EA29FED201B113C00336040 /* HWDaySectionHeader.m */,
+				7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */,
+				7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		836A256E3E4615AE52891E4B /* Pods */ = {

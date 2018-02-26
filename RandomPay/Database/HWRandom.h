@@ -15,6 +15,7 @@
 @property NSNumber<RLMFloat> *value;    // 随机数值
 @property NSNumber<RLMFloat> *costPercent;  // 刷卡损耗
 @property NSNumber<RLMInt> *bankType;   // 归属银行 1-中信 2-招商 3-浦发
+@property NSNumber<RLMInt> *posType;    // 刷卡类型 1-POS机 2-支付宝 3-微信
 @property BOOL isDetail;
 
 + (NSNumber *)getUniqueRandomFrom:(NSInteger)from to:(NSInteger)to ignoreDigits:(BOOL)ignoreDigits hasDecimals:(BOOL)hasDecimals;
