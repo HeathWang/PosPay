@@ -11,7 +11,8 @@
 #import "HWRandomMainController.h"
 #import "IQKeyboardManager.h"
 #import "RLMRealmConfiguration.h"
-#import <RLMRealm.h>
+#import "RLMMigration.h"
+#import "HWRandom.h"
 
 @interface AppDelegate ()
 
@@ -89,6 +90,13 @@
     };
     [RLMRealmConfiguration setDefaultConfiguration:configuration];
     [RLMRealm defaultRealm];
+
+    // version3 新增posType，默认设置为1
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    RLMResults *randoms = [HWRandom objectsInRealm:realm where:@"posType = null"];
+    [randoms setValue:@(1) forKeyPath:@"posType"];
+    [realm commitWriteTransaction];
 }
 
 - (void)configGlobalUI {

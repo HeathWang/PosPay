@@ -39,6 +39,7 @@
 		7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04C82043AE0B0092D634 /* HWTypeSelectView.m */; };
 		7EAC04CC2043B2630092D634 /* HWPosTypeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */; };
 		7EAC04CF2043C7160092D634 /* HWAppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04CE2043C7160092D634 /* HWAppConfig.m */; };
+		7EAC04D22043E1090092D634 /* HWQueryRecordsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D12043E1090092D634 /* HWQueryRecordsController.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +111,8 @@
 		7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWPosTypeCollectionCell.m; sourceTree = "<group>"; };
 		7EAC04CD2043C7160092D634 /* HWAppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWAppConfig.h; sourceTree = "<group>"; };
 		7EAC04CE2043C7160092D634 /* HWAppConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWAppConfig.m; sourceTree = "<group>"; };
+		7EAC04D02043E1090092D634 /* HWQueryRecordsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWQueryRecordsController.h; sourceTree = "<group>"; };
+		7EAC04D12043E1090092D634 /* HWQueryRecordsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWQueryRecordsController.m; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -149,6 +152,8 @@
 				7E066C3120231292001C38B6 /* HWSummaryController.m */,
 				7E6BB4022030279700E99EEE /* HWMonthDataListController.h */,
 				7E6BB4032030279700E99EEE /* HWMonthDataListController.m */,
+				7EAC04D02043E1090092D634 /* HWQueryRecordsController.h */,
+				7EAC04D12043E1090092D634 /* HWQueryRecordsController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
 				7EA29FBF2015B3DE00336040 /* BaseViewController.m in Sources */,
+				7EAC04D22043E1090092D634 /* HWQueryRecordsController.m in Sources */,
 				7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */,
 				7EA29FA82015ABCE00336040 /* main.m in Sources */,
 				7EA29FB92015B1E000336040 /* HWBaseNavigationController.m in Sources */,
