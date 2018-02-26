@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSDate *startDate;
 @property (nonatomic, copy) NSDate *endDate;
+@property (nonatomic, weak) UIViewController *viewController;
 
 @property (nonatomic, readonly) NSInteger filterCostPercent;
 @property (nonatomic, readonly) NSInteger filterBank;

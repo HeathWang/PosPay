@@ -47,7 +47,7 @@
 
 - (void)setupNav {
     self.navigationItem.title = @"查询";
-    UIButton *btnQuery = [UIButton navButtonWithTitle:@"查询" font:[UIFont systemFontOfSize:16 weight:UIFontWeightBold] titleColor:kThemeColor];
+    UIButton *btnQuery = [UIButton navButtonWithTitle:@"确定" font:[UIFont systemFontOfSize:16 weight:UIFontWeightBold] titleColor:kThemeColor];
     [btnQuery addTarget:self action:@selector(doQueryAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btnQuery];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -76,6 +76,9 @@
 #pragma mark - touch action
 
 - (void)doQueryAction {
+    self.startDate = self.optionsView.startDate;
+    self.endDate = self.optionsView.endDate;
+
     RLMResults<HWRandom *> *results1 = [[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@", self.startDate, self.endDate] sortedResultsUsingKeyPath:@"randomDate" ascending:YES];
     if (self.optionsView.filterCostPercent != 0) {
         NSNumber *costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) (self.optionsView.filterCostPercent - 1)];
@@ -150,6 +153,7 @@
         _optionsView = [[HWQueryOptionsView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 214)];
         _optionsView.startDate = self.startDate;
         _optionsView.endDate = self.endDate;
+        _optionsView.viewController = self;
     }
     return _optionsView;
 }
