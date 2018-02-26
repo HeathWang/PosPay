@@ -13,6 +13,7 @@
 @interface HWRandomHistoryCell ()
 
 @property (nonatomic, strong) UIImageView *imgBank;
+@property (nonatomic, strong) UIImageView *imgCostType;
 @property (nonatomic, strong) UILabel *lblDate;
 
 @property (nonatomic, strong) UIView *centerView;
@@ -27,6 +28,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self.contentView addSubview:self.imgBank];
+        [self.contentView addSubview:self.imgCostType];
         [self.contentView addSubview:self.lblDate];
 
         [self.contentView addSubview:self.centerView];
@@ -36,12 +38,18 @@
         [self.imgBank mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@14);
             make.centerY.equalTo(@0);
-            make.size.mas_equalTo(CGSizeMake(40, 40));
+            make.size.mas_equalTo(CGSizeMake(30, 30));
+        }];
+
+        [self.imgCostType mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(@0);
+            make.left.equalTo(self.imgBank.mas_right).offset(2);
+            make.size.mas_equalTo(CGSizeMake(22, 22));
         }];
 
         [self.lblDate mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(@0);
-            make.left.equalTo(self.imgBank.mas_right).offset(4);
+            make.left.equalTo(self.imgCostType.mas_right).offset(4);
         }];
 
         [self.centerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -91,6 +99,20 @@
             break;
     }
 
+    switch (random.posType.integerValue) {
+        case 1:
+            self.imgCostType.image = [UIImage imageNamed:@"icon_pay_pos"];
+            break;
+        case 2:
+            self.imgCostType.image = [UIImage imageNamed:@"icon_pay_ap"];
+            break;
+        case 3:
+            self.imgCostType.image = [UIImage imageNamed:@"icon_pay_wx"];
+            break;
+        default:
+            break;
+    }
+
     if (random.isDetail) {
         self.lblDate.text = [random.randomDate formattedDateWithFormat:@"yy-MM-dd HH:mm:ss"];
     } else {
@@ -132,6 +154,13 @@
         _imgBank = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_bank_1"]];
     }
     return _imgBank;
+}
+
+- (UIImageView *)imgCostType {
+    if (!_imgCostType) {
+        _imgCostType = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_pay_pos"]];
+    }
+    return _imgCostType;
 }
 
 - (UILabel *)lblCostPercent {

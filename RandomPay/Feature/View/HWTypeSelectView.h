@@ -20,6 +20,4 @@
 + (instancetype)viewWithTypeList:(NSArray *)typeList;
 
 
-
-
 @end
