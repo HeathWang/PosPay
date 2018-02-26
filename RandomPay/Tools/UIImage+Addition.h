@@ -58,11 +58,4 @@
  */
 + (UIImage *)gradientImageWithSize:(CGSize)size colors:(NSArray *)colors startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 
-+ (UIImage *)buttonBackgroundImageWithSize:(CGSize)size;
-
-/**
- * navigationbar 背景图片
- * @return
- */
-+ (UIImage *)blurNavImage;
 @end
