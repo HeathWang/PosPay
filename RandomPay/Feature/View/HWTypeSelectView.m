@@ -39,6 +39,11 @@
     return [[self alloc] initWithTypeList:typeList];
 }
 
+- (void)changeSelectIndex:(NSInteger)index {
+    self.selectIndex = index;
+    [self.collectionView reloadData];
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -54,6 +59,7 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     HWPosTypeCollectionCell *collectionCell = [collectionView dequeueReusableCellWithReuseIdentifier:[HWPosTypeCollectionCell identifier] forIndexPath:indexPath];
+
     [collectionCell updateButtonText:self.typeList[(NSUInteger) indexPath.row] isSelected:indexPath.row == self.selectIndex];
     return collectionCell;
 }

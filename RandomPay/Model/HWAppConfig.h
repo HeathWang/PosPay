@@ -10,4 +10,9 @@
 
 @interface HWAppConfig : NSObject
 
+@property (nonatomic, readonly) NSArray *posCostStrList;
+@property (readonly) NSArray *postCostValueList;
+@property (nonatomic, readonly) NSArray *bankTypeList;
+
++ (instancetype)sharedInstance;
 @end

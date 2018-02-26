@@ -20,4 +20,15 @@
     return _sharedHWAppConfig;
 }
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _posCostStrList = @[@"0.00", @"0.38", @"0.60", @"1.00"];
+        _postCostValueList = @[@0, @(0.0038f), @(0.0060f), @(0.0100f)];
+        _bankTypeList = @[@"中信", @"招商", @"浦发"];
+    }
+    return self;
+}
+
+
 @end

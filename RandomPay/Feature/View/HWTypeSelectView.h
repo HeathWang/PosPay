@@ -15,7 +15,11 @@
 
 - (instancetype)initWithTypeList:(NSArray *)typeList;
 
+- (void)changeSelectIndex:(NSInteger)index;
+
 + (instancetype)viewWithTypeList:(NSArray *)typeList;
+
+
 
 
 @end

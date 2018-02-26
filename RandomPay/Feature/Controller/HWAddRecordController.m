@@ -14,13 +14,13 @@
 #import "HWTypeSelectView.h"
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+VBAdd.h"
+#import "HWAppConfig.h"
 
 @interface HWAddRecordController () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) UITextField *fldAmount;
 @property (nonatomic, strong) UILabel *lblDateSelect;
 @property (nonatomic, strong) UILabel *lblCost;
-@property (nonatomic, strong) UISlider *sliderCost;
 @property (nonatomic, strong) UILabel *lblBank;
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) HWTypeSelectView *posCostSelectView;
@@ -58,7 +58,12 @@
         if (self.random) {
             self.selectDate = self.random.randomDate;
             self.typeNumber = @(self.random.bankType.integerValue - 1);
-            self.sliderCost.value = self.random.costPercent.floatValue * 100;
+
+            NSInteger index = [[HWAppConfig sharedInstance].postCostValueList indexOfObject:@(self.random.costPercent.floatValue)];
+            if (index != NSNotFound) {
+                [self.posCostSelectView changeSelectIndex:index];
+            }
+
             self.fldAmount.text = [NSString stringWithFormat:@"%.1f", self.random.value.floatValue];
         }
     } else {
@@ -66,7 +71,7 @@
         self.typeNumber = @(0);
     }
 
-    self.bankList = @[@"中信", @"招商", @"浦发"];
+    self.bankList = [HWAppConfig sharedInstance].bankTypeList;
 }
 
 - (void)setupNav {
@@ -148,10 +153,6 @@
 
 #pragma mark - touch action
 
-- (void)sliderValueChanged:(UISlider *)sender {
-    [self updateUI];
-}
-
 - (void)datePickerDateChanged:(UIDatePicker *)sender {
     self.selectDate = sender.date;
     [self updateUI];
@@ -189,7 +190,7 @@
         [realm beginWriteTransaction];
 
         self.random.bankType = @(self.typeNumber.integerValue + 1);
-        self.random.costPercent = @(self.sliderCost.value / 100.00f);
+        self.random.costPercent = [HWAppConfig sharedInstance].postCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];
         self.random.randomDate = self.selectDate;
         self.random.value = @(self.fldAmount.text.floatValue);
 
@@ -232,7 +233,7 @@
         HWRandom *random1 = [HWRandom new];
         random1.randomDate = self.selectDate;
         random1.value = @(self.fldAmount.text.floatValue);
-        random1.costPercent = @(self.sliderCost.value / 100.00f);
+        random1.costPercent = [HWAppConfig sharedInstance].postCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];;
         random1.bankType = @(self.typeNumber.integerValue + 1);
 
         [realm beginWriteTransaction];
@@ -313,7 +314,7 @@
 
 - (HWTypeSelectView *)posCostSelectView {
     if (!_posCostSelectView) {
-        _posCostSelectView = [[HWTypeSelectView alloc] initWithTypeList:@[@"0.00", @"0.38", @"0.60", @"1.00"]];
+        _posCostSelectView = [[HWTypeSelectView alloc] initWithTypeList:[HWAppConfig sharedInstance].posCostStrList];
     }
     return _posCostSelectView;
 }

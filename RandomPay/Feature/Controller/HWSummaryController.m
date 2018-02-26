@@ -15,6 +15,7 @@
 #import "HWSummaryMonthModel.h"
 #import "HWDateRangeModel.h"
 #import "HWMonthDataListController.h"
+#import "HWAppConfig.h"
 
 @interface HWSummaryController () <UITableViewDataSource, UITableViewDelegate, HalfYearSummaryCellDelegate>
 
@@ -196,7 +197,7 @@
 
 - (void)fetchMonthData {
     NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:3];
-    NSArray *bankList = @[@"中信", @"招商", @"浦发"];
+    NSArray *bankList = [HWAppConfig sharedInstance].bankTypeList;
 
     for (int i = 0; i < 3; i ++) {
 
