@@ -36,6 +36,9 @@
 		7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FE72015E05600336040 /* NSUserDefaults+HWCache.m */; };
 		7EA29FEB201B075500336040 /* HWDayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FEA201B075500336040 /* HWDayList.m */; };
 		7EA29FEE201B113C00336040 /* HWDaySectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29FED201B113C00336040 /* HWDaySectionHeader.m */; };
+		7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04C82043AE0B0092D634 /* HWTypeSelectView.m */; };
+		7EAC04CC2043B2630092D634 /* HWPosTypeCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */; };
+		7EAC04CF2043C7160092D634 /* HWAppConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04CE2043C7160092D634 /* HWAppConfig.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +104,12 @@
 		7EA29FEA201B075500336040 /* HWDayList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDayList.m; sourceTree = "<group>"; };
 		7EA29FEC201B113C00336040 /* HWDaySectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWDaySectionHeader.h; sourceTree = "<group>"; };
 		7EA29FED201B113C00336040 /* HWDaySectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDaySectionHeader.m; sourceTree = "<group>"; };
+		7EAC04C72043AE0B0092D634 /* HWTypeSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWTypeSelectView.h; sourceTree = "<group>"; };
+		7EAC04C82043AE0B0092D634 /* HWTypeSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWTypeSelectView.m; sourceTree = "<group>"; };
+		7EAC04CA2043B2630092D634 /* HWPosTypeCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWPosTypeCollectionCell.h; sourceTree = "<group>"; };
+		7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWPosTypeCollectionCell.m; sourceTree = "<group>"; };
+		7EAC04CD2043C7160092D634 /* HWAppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWAppConfig.h; sourceTree = "<group>"; };
+		7EAC04CE2043C7160092D634 /* HWAppConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWAppConfig.m; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +132,8 @@
 				7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */,
 				7E6BB3FD2030241C00E99EEE /* HWDateRangeModel.h */,
 				7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */,
+				7EAC04CD2043C7160092D634 /* HWAppConfig.h */,
+				7EAC04CE2043C7160092D634 /* HWAppConfig.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -222,9 +233,9 @@
 		7EA29FB32015B10000336040 /* Feature */ = {
 			isa = PBXGroup;
 			children = (
-				7EAC04C52043AD460092D634 /* View */,
 				7E6BB4012030274400E99EEE /* Base */,
 				7E6BB4002030272400E99EEE /* Controller */,
+				7EAC04C52043AD460092D634 /* View */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -246,6 +257,8 @@
 				7EAC04C62043AD570092D634 /* Cell */,
 				7EA29FD62015BB7200336040 /* HWRandomView.h */,
 				7EA29FD72015BB7200336040 /* HWRandomView.m */,
+				7EAC04C72043AE0B0092D634 /* HWTypeSelectView.h */,
+				7EAC04C82043AE0B0092D634 /* HWTypeSelectView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -259,6 +272,8 @@
 				7EA29FED201B113C00336040 /* HWDaySectionHeader.m */,
 				7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */,
 				7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */,
+				7EAC04CA2043B2630092D634 /* HWPosTypeCollectionCell.h */,
+				7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -413,11 +428,13 @@
 				7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */,
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
 				7E066C3220231292001C38B6 /* HWSummaryController.m in Sources */,
+				7EAC04CF2043C7160092D634 /* HWAppConfig.m in Sources */,
 				7E6BB3FF2030241C00E99EEE /* HWDateRangeModel.m in Sources */,
 				7E6BB3FC202FDE3A00E99EEE /* NSString+HWAdd.m in Sources */,
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
 				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,
 				7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */,
+				7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
 				7EA29FBF2015B3DE00336040 /* BaseViewController.m in Sources */,
 				7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */,
@@ -432,6 +449,7 @@
 				7EA29FE22015D38A00336040 /* HWRandom.m in Sources */,
 				7EA29FCD2015B65B00336040 /* UILabel+Addition.m in Sources */,
 				7EA29FD12015B67700336040 /* UIFont+ElAdd.m in Sources */,
+				7EAC04CC2043B2630092D634 /* HWPosTypeCollectionCell.m in Sources */,
 				7E6BB4042030279700E99EEE /* HWMonthDataListController.m in Sources */,
 				7EA29FCE2015B65B00336040 /* UIButton+Addition.m in Sources */,
 				7EA29FEB201B075500336040 /* HWDayList.m in Sources */,

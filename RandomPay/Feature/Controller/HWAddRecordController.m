@@ -11,6 +11,7 @@
 #import "HWRandom.h"
 #import "DateTools.h"
 #import "HWDayList.h"
+#import "HWTypeSelectView.h"
 
 @interface HWAddRecordController () <UIActionSheetDelegate>
 
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) UISlider *sliderCost;
 @property (nonatomic, strong) UILabel *lblBank;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) HWTypeSelectView *posCostSelectView;
 
 // data
 @property (nonatomic, strong) HWRandom *random;
@@ -82,7 +84,7 @@
     [self.view addSubview:self.fldAmount];
     [self.view addSubview:self.lblDateSelect];
     [self.view addSubview:self.lblCost];
-    [self.view addSubview:self.sliderCost];
+    [self.view addSubview:self.posCostSelectView];
     [self.view addSubview:self.lblBank];
     [self.view addSubview:self.datePicker];
 
@@ -108,17 +110,18 @@
 
     [self.lblCost mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@14);
-        make.top.equalTo(self.lblDateSelect.mas_bottom).offset(bottomMargin);
+        make.centerY.equalTo(self.posCostSelectView);
     }];
 
-    [self.sliderCost mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.posCostSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.lblCost.mas_right).offset(5);
-        make.centerY.equalTo(self.lblCost);
         make.right.equalTo(@-14);
+        make.top.equalTo(self.lblDateSelect.mas_bottom).offset(bottomMargin);
+        make.height.mas_equalTo(44);
     }];
 
     [self.lblBank mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.lblCost.mas_bottom).offset(bottomMargin);
+        make.top.equalTo(self.posCostSelectView.mas_bottom).offset(bottomMargin);
         make.left.equalTo(@14);
         make.right.equalTo(@-14);
     }];
@@ -138,7 +141,6 @@
 - (void)updateUI {
     self.lblDateSelect.text = [NSString stringWithFormat:@"日期：%@", [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
     self.lblBank.text = [NSString stringWithFormat:@"银行类型：%@", self.bankList[(NSUInteger) self.typeNumber.integerValue]];
-    self.lblCost.text = [NSString stringWithFormat:@"费率：%.2f%%", self.sliderCost.value];
     self.datePicker.date = self.selectDate;
 }
 
@@ -277,21 +279,9 @@
 
 - (UILabel *)lblCost {
     if (!_lblCost) {
-        _lblCost = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"费率：0.60%"];
+        _lblCost = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"费率："];
     }
     return _lblCost;
-}
-
-- (UISlider *)sliderCost {
-    if (!_sliderCost) {
-        _sliderCost = [[UISlider alloc] init];
-        _sliderCost.minimumValue = 0.38;
-        _sliderCost.maximumValue = 1;
-        _sliderCost.value = 0.60;
-
-        [_sliderCost addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
-    }
-    return _sliderCost;
 }
 
 - (UILabel *)lblBank {
@@ -311,6 +301,14 @@
         [_datePicker addTarget:self action:@selector(datePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
     }
     return _datePicker;
+}
+
+
+- (HWTypeSelectView *)posCostSelectView {
+    if (!_posCostSelectView) {
+        _posCostSelectView = [[HWTypeSelectView alloc] initWithTypeList:@[@"0.00", @"0.38", @"0.60", @"1.00"]];
+    }
+    return _posCostSelectView;
 }
 
 
