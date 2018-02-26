@@ -24,7 +24,6 @@
     self = [super init];
     if (self) {
         _typeList = [typeList copy];
-        _selectIndex = 2;
 
         [self addSubview:self.collectionView];
 
@@ -72,8 +71,8 @@
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         flowLayout.minimumLineSpacing = 10;
-        flowLayout.minimumInteritemSpacing = 10;
-        flowLayout.itemSize = CGSizeMake(60, 40);
+        flowLayout.minimumInteritemSpacing = 8;
+        flowLayout.itemSize = CGSizeMake(68, 40);
 
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.showsHorizontalScrollIndicator = NO;

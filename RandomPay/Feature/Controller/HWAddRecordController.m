@@ -16,20 +16,22 @@
 #import "MBProgressHUD+VBAdd.h"
 #import "HWAppConfig.h"
 
-@interface HWAddRecordController () <UIActionSheetDelegate>
+@interface HWAddRecordController ()
 
 @property (nonatomic, strong) UITextField *fldAmount;
 @property (nonatomic, strong) UILabel *lblDateSelect;
 @property (nonatomic, strong) UILabel *lblCost;
 @property (nonatomic, strong) UILabel *lblBank;
+@property (nonatomic, strong) UILabel *lblPosType;
 @property (nonatomic, strong) UIDatePicker *datePicker;
+
 @property (nonatomic, strong) HWTypeSelectView *posCostSelectView;
+@property (nonatomic, strong) HWTypeSelectView *bankSelectView;
+@property (nonatomic, strong) HWTypeSelectView *posTypeSelectView;
 
 // data
 @property (nonatomic, strong) HWRandom *random;
 @property (nonatomic, copy) NSDate *selectDate;
-@property (nonatomic, copy) NSNumber *typeNumber;
-@property (nonatomic, copy) NSArray *bankList;
 
 @end
 
@@ -57,21 +59,25 @@
         self.random = [HWRandom objectForPrimaryKey:self.rid];
         if (self.random) {
             self.selectDate = self.random.randomDate;
-            self.typeNumber = @(self.random.bankType.integerValue - 1);
 
-            NSInteger index = [[HWAppConfig sharedInstance].postCostValueList indexOfObject:@(self.random.costPercent.floatValue)];
+            NSInteger index = [[HWAppConfig sharedInstance].posCostValueList indexOfObject:@(self.random.costPercent.floatValue)];
             if (index != NSNotFound) {
                 [self.posCostSelectView changeSelectIndex:index];
             }
 
             self.fldAmount.text = [NSString stringWithFormat:@"%.1f", self.random.value.floatValue];
+
+            [self.bankSelectView changeSelectIndex:self.random.bankType.integerValue - 1];
+            [self.posTypeSelectView changeSelectIndex:self.random.posType.integerValue - 1];
         }
     } else {
         self.selectDate = [NSDate date];
-        self.typeNumber = @(0);
+
+        // set default select.
+        [self.posCostSelectView changeSelectIndex:2];
+
     }
 
-    self.bankList = [HWAppConfig sharedInstance].bankTypeList;
 }
 
 - (void)setupNav {
@@ -90,9 +96,16 @@
 - (void)setupView {
     [self.view addSubview:self.fldAmount];
     [self.view addSubview:self.lblDateSelect];
+
     [self.view addSubview:self.lblCost];
     [self.view addSubview:self.posCostSelectView];
+
     [self.view addSubview:self.lblBank];
+    [self.view addSubview:self.bankSelectView];
+
+    [self.view addSubview:self.lblPosType];
+    [self.view addSubview:self.posTypeSelectView];
+
     [self.view addSubview:self.datePicker];
 
     [self setupViewConstraints];
@@ -122,32 +135,43 @@
 
     [self.posCostSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.lblCost.mas_right).offset(5);
-        make.right.equalTo(@-14);
+        make.right.equalTo(@0);
         make.top.equalTo(self.lblDateSelect.mas_bottom).offset(bottomMargin);
         make.height.mas_equalTo(44);
     }];
 
     [self.lblBank mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.posCostSelectView.mas_bottom).offset(bottomMargin);
+        make.centerY.equalTo(self.bankSelectView);
         make.left.equalTo(@14);
-        make.right.equalTo(@-14);
+    }];
+
+    [self.bankSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.lblBank.mas_right).offset(5);
+        make.right.equalTo(@0);
+        make.top.equalTo(self.posCostSelectView.mas_bottom).offset(bottomMargin);
+        make.height.mas_equalTo(44);
+    }];
+
+    [self.lblPosType mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.posTypeSelectView);
+        make.left.equalTo(@14);
+    }];
+
+    [self.posTypeSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.lblPosType.mas_right).offset(5);
+        make.right.equalTo(@0);
+        make.top.equalTo(self.bankSelectView.mas_bottom).offset(bottomMargin);
+        make.height.mas_equalTo(44);
     }];
 
     [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(@0);
     }];
 
-    UIButton *button = [UIButton new];
-    [button addTarget:self action:@selector(showSelectBank) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.lblBank);
-    }];
 }
 
 - (void)updateUI {
     self.lblDateSelect.text = [NSString stringWithFormat:@"日期：%@", [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
-    self.lblBank.text = [NSString stringWithFormat:@"银行类型：%@", self.bankList[(NSUInteger) self.typeNumber.integerValue]];
     self.datePicker.date = self.selectDate;
 }
 
@@ -157,13 +181,6 @@
     self.selectDate = sender.date;
     [self updateUI];
 }
-
-- (void)showSelectBank {
-    [self.view endEditing:YES];
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"中信", @"招商", @"浦发", nil];
-    [sheet showInView:self.navigationController.view];
-}
-
 
 - (void)closeAction {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
@@ -189,8 +206,9 @@
     if (self.isEdit) {
         [realm beginWriteTransaction];
 
-        self.random.bankType = @(self.typeNumber.integerValue + 1);
-        self.random.costPercent = [HWAppConfig sharedInstance].postCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];
+        self.random.bankType = @(self.bankSelectView.selectIndex + 1);
+        self.random.posType = @(self.posTypeSelectView.selectIndex + 1);
+        self.random.costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];
         self.random.randomDate = self.selectDate;
         self.random.value = @(self.fldAmount.text.floatValue);
 
@@ -233,8 +251,9 @@
         HWRandom *random1 = [HWRandom new];
         random1.randomDate = self.selectDate;
         random1.value = @(self.fldAmount.text.floatValue);
-        random1.costPercent = [HWAppConfig sharedInstance].postCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];;
-        random1.bankType = @(self.typeNumber.integerValue + 1);
+        random1.costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) self.posCostSelectView.selectIndex];;
+        random1.bankType = @(self.bankSelectView.selectIndex + 1);
+        random1.posType = @(self.posTypeSelectView.selectIndex + 1);
 
         [realm beginWriteTransaction];
 
@@ -255,16 +274,6 @@
         [realm commitWriteTransaction:NULL];
         [self closeAction];
     }
-}
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 3)
-        return;
-
-    self.typeNumber = @(buttonIndex);
-    [self updateUI];
 }
 
 
@@ -294,10 +303,18 @@
 
 - (UILabel *)lblBank {
     if (!_lblBank) {
-        _lblBank = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"银行类型："];
+        _lblBank = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"银行："];
     }
     return _lblBank;
 }
+
+- (UILabel *)lblPosType {
+    if (!_lblPosType) {
+        _lblPosType = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"支付："];
+    }
+    return _lblPosType;
+}
+
 
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
@@ -317,6 +334,20 @@
         _posCostSelectView = [[HWTypeSelectView alloc] initWithTypeList:[HWAppConfig sharedInstance].posCostStrList];
     }
     return _posCostSelectView;
+}
+
+- (HWTypeSelectView *)bankSelectView {
+    if (!_bankSelectView) {
+        _bankSelectView = [[HWTypeSelectView alloc] initWithTypeList:[HWAppConfig sharedInstance].bankTypeList];
+    }
+    return _bankSelectView;
+}
+
+- (HWTypeSelectView *)posTypeSelectView {
+    if (!_posTypeSelectView) {
+        _posTypeSelectView = [[HWTypeSelectView alloc] initWithTypeList:[HWAppConfig sharedInstance].posTypeList];
+    }
+    return _posTypeSelectView;
 }
 
 
