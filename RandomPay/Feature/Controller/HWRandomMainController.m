@@ -16,6 +16,7 @@
 #import "HWAddRecordController.h"
 #import "HWBaseNavigationController.h"
 #import "HWSummaryController.h"
+#import "HWQueryRecordsController.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate>
 
@@ -42,7 +43,7 @@
     self.navigationItem.title = @"RANDOM";
     UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addRecordAction)];
 
-    UIButton *filterButton = [UIButton navButtonWithTitle:@"筛选" font:[UIFont systemFontOfSize:16 weight:UIFontWeightMedium] titleColor:kThemeColor];
+    UIButton *filterButton = [UIButton navButtonWithTitle:@"查询" font:[UIFont systemFontOfSize:16 weight:UIFontWeightMedium] titleColor:kThemeColor];
     [filterButton addTarget:self action:@selector(filterAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *filterItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
     self.navigationItem.rightBarButtonItems = @[rightAdd, filterItem];
@@ -209,24 +210,6 @@
     return YES;
 }
 
-
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex >= 4) return;
-    if (buttonIndex == 0) {
-        self.historyList = [[HWDayList allObjects] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
-        [self addDataBaseObserver];
-    } else {
-        self.historyList = [[[HWDayList allObjects] objectsWhere:@"ANY randoms.bankType = %@", @(buttonIndex)] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
-        [self addDataBaseObserver];
-    }
-    self.filterType = @(buttonIndex);
-
-    [self.tableView reloadData];
-}
-
-
 #pragma mark - touch action
 
 
@@ -239,9 +222,8 @@
 }
 
 - (void)filterAction {
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行类型" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"全部", @"中信", @"招商", @"浦发", nil];
-//    [sheet showInView:self.navigationController.view];
-    [HWDatePickerView showInView:self.navigationController.view delegate:nil];
+    HWQueryRecordsController *queryRecordsController = [HWQueryRecordsController new];
+    [self.navigationController pushViewController:queryRecordsController animated:YES];
 
 }
 

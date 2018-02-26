@@ -42,6 +42,7 @@
 		7EAC04D22043E1090092D634 /* HWQueryRecordsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D12043E1090092D634 /* HWQueryRecordsController.m */; };
 		7EAC04D52043E8590092D634 /* HWQueryOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D42043E8590092D634 /* HWQueryOptionsView.m */; };
 		7EAC04D82043EDB30092D634 /* HWDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D72043EDB30092D634 /* HWDatePickerView.m */; };
+		7EAC04DB20443D6D0092D634 /* EPEmptyDataProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D920443D6C0092D634 /* EPEmptyDataProtocol.m */; };
 		A1AFC4610A15D7CCAFF73992 /* libPods-RandomPay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,8 @@
 		7EAC04D42043E8590092D634 /* HWQueryOptionsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWQueryOptionsView.m; sourceTree = "<group>"; };
 		7EAC04D62043EDB30092D634 /* HWDatePickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWDatePickerView.h; sourceTree = "<group>"; };
 		7EAC04D72043EDB30092D634 /* HWDatePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDatePickerView.m; sourceTree = "<group>"; };
+		7EAC04D920443D6C0092D634 /* EPEmptyDataProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPEmptyDataProtocol.m; sourceTree = "<group>"; };
+		7EAC04DA20443D6D0092D634 /* EPEmptyDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPEmptyDataProtocol.h; sourceTree = "<group>"; };
 		81AD6396FA5C621ED18FBB54 /* libPods-RandomPay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RandomPay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -215,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				7EA29FD22015B68500336040 /* CategoryHeader.h */,
+				7EAC04DA20443D6D0092D634 /* EPEmptyDataProtocol.h */,
+				7EAC04D920443D6C0092D634 /* EPEmptyDataProtocol.m */,
 				7EA29FD32015B6A600336040 /* UIImage+Addition.h */,
 				7EA29FD42015B6A600336040 /* UIImage+Addition.m */,
 				7EA29FD02015B67700336040 /* UIFont+ElAdd.h */,
@@ -455,6 +460,7 @@
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
 				7EA29FBF2015B3DE00336040 /* BaseViewController.m in Sources */,
 				7EAC04D22043E1090092D634 /* HWQueryRecordsController.m in Sources */,
+				7EAC04DB20443D6D0092D634 /* EPEmptyDataProtocol.m in Sources */,
 				7EA29FDB2015C3A400336040 /* MBProgressHUD+VBAdd.m in Sources */,
 				7EA29FA82015ABCE00336040 /* main.m in Sources */,
 				7EA29FB92015B1E000336040 /* HWBaseNavigationController.m in Sources */,

@@ -10,4 +10,12 @@
 
 @interface HWQueryOptionsView : UIView
 
+@property (nonatomic, copy) NSDate *startDate;
+@property (nonatomic, copy) NSDate *endDate;
+
+@property (nonatomic, readonly) NSInteger filterCostPercent;
+@property (nonatomic, readonly) NSInteger filterBank;
+@property (nonatomic, readonly) NSInteger filterPosType;
+
+- (void)updateSelectDate;
 @end
