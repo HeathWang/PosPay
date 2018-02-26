@@ -23,7 +23,6 @@
 @property (nonatomic, strong) UILabel *lblCost;
 @property (nonatomic, strong) UILabel *lblBank;
 @property (nonatomic, strong) UILabel *lblPosType;
-@property (nonatomic, strong) UIDatePicker *datePicker;
 
 @property (nonatomic, strong) HWTypeSelectView *posCostSelectView;
 @property (nonatomic, strong) HWTypeSelectView *bankSelectView;
@@ -106,7 +105,6 @@
     [self.view addSubview:self.lblPosType];
     [self.view addSubview:self.posTypeSelectView];
 
-    [self.view addSubview:self.datePicker];
 
     [self setupViewConstraints];
 
@@ -126,6 +124,13 @@
         make.left.equalTo(@14);
         make.right.equalTo(@-14);
         make.top.equalTo(self.fldAmount.mas_bottom).offset(bottomMargin);
+    }];
+
+    UIButton *btnDate = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnDate addTarget:self action:@selector(showDatePickerAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.lblDateSelect addSubview:btnDate];
+    [btnDate mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
 
     [self.lblCost mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -164,28 +169,33 @@
         make.height.mas_equalTo(44);
     }];
 
-    [self.datePicker mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(@0);
-    }];
-
 }
 
 - (void)updateUI {
     self.lblDateSelect.text = [NSString stringWithFormat:@"日期：%@", [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd HH:mm:ss"]];
-    self.datePicker.date = self.selectDate;
+}
+
+#pragma mark - HWDatePickerViewDelegate
+
+- (void)didPicketDate:(NSDate *)pickedDate {
+    self.selectDate = pickedDate;
+    [self updateUI];
+}
+
+- (NSDate *)requireCurrentDate {
+    return self.selectDate;
 }
 
 #pragma mark - touch action
-
-- (void)datePickerDateChanged:(UIDatePicker *)sender {
-    self.selectDate = sender.date;
-    [self updateUI];
-}
 
 - (void)closeAction {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
 
     }];
+}
+
+- (void)showDatePickerAction {
+    [HWDatePickerView showInView:self.navigationController.view delegate:self];
 }
 
 - (void)submitAction {
@@ -290,6 +300,7 @@
 - (UILabel *)lblDateSelect {
     if (!_lblDateSelect) {
         _lblDateSelect = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"日期："];
+        _lblDateSelect.userInteractionEnabled = YES;
     }
     return _lblDateSelect;
 }
@@ -313,19 +324,6 @@
         _lblPosType = [UILabel labelWithAlignment:NSTextAlignmentLeft textColor:[UIColor darkGrayColor] font:[UIFont systemFontOfSize:16] text:@"支付："];
     }
     return _lblPosType;
-}
-
-
-- (UIDatePicker *)datePicker {
-    if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc] init];
-        _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _datePicker.minimumDate = [[NSDate date] dateByAddingYears:-1];
-        _datePicker.maximumDate = [[NSDate date] dateByAddingMonths:1];
-
-        [_datePicker addTarget:self action:@selector(datePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
-    }
-    return _datePicker;
 }
 
 

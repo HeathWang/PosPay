@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import "HWDatePickerView.h"
 
-@interface HWAddRecordController : BaseViewController
+@interface HWAddRecordController : BaseViewController <HWDatePickerViewDelegate>
 
 @property (nonatomic, assign) BOOL isEdit;
 @property (nonatomic, copy) NSString *rid;

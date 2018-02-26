@@ -239,8 +239,9 @@
 }
 
 - (void)filterAction {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行类型" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"全部", @"中信", @"招商", @"浦发", nil];
-    [sheet showInView:self.navigationController.view];
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请选择银行类型" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"全部", @"中信", @"招商", @"浦发", nil];
+//    [sheet showInView:self.navigationController.view];
+    [HWDatePickerView showInView:self.navigationController.view delegate:nil];
 
 }
 
