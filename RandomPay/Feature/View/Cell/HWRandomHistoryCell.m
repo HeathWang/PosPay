@@ -114,7 +114,7 @@
     }
 
     if (random.isDetail) {
-        self.lblDate.text = [random.randomDate formattedDateWithFormat:@"yy-MM-dd HH:mm:ss"];
+        self.lblDate.text = [random.randomDate formattedDateWithFormat:@"yy/MM/dd HH:mm"];
     } else {
         self.lblDate.text = [random.randomDate formattedDateWithFormat:@"HH:mm:ss"];
     }
