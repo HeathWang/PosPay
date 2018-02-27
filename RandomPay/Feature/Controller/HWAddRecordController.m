@@ -81,9 +81,9 @@
 
 - (void)setupNav {
     if (self.isEdit) {
-        self.navigationItem.title = @"EDIT";
+        self.navigationItem.title = @"修改";
     } else {
-        self.navigationItem.title = @"ADD";
+        self.navigationItem.title = @"新增";
     }
 
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeAction)];
@@ -292,7 +292,7 @@
 
 - (UITextField *)fldAmount {
     if (!_fldAmount) {
-        _fldAmount = [UITextField textFieldWithLeftTitle:@"Amount" keyboardType:UIKeyboardTypeDecimalPad];
+        _fldAmount = [UITextField textFieldWithLeftTitle:@"金额：" keyboardType:UIKeyboardTypeDecimalPad];
         _fldAmount.placeholder = @"请输入金额";
     }
     return _fldAmount;

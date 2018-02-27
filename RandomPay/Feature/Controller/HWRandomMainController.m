@@ -41,7 +41,7 @@
 }
 
 - (void)setupNav {
-    self.navigationItem.title = @"RANDOM";
+    self.navigationItem.title = @"POS记账";
     UIBarButtonItem *rightAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addRecordAction)];
 
     UIButton *filterButton = [UIButton navButtonWithTitle:@"查询" font:[UIFont systemFontOfSize:16 weight:UIFontWeightMedium] titleColor:kThemeColor];

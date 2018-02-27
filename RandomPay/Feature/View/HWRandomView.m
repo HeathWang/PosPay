@@ -236,7 +236,7 @@
 
 - (UIButton *)btnStart {
     if (!_btnStart) {
-        _btnStart = [UIButton buttonWithFont:[UIFont systemFontOfSize:20 weight:UIFontWeightBold] title:@"Random" textColor:[UIColor whiteColor]];
+        _btnStart = [UIButton buttonWithFont:[UIFont systemFontOfSize:20 weight:UIFontWeightBold] title:@"随机" textColor:[UIColor whiteColor]];
         [_btnStart setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:0.377 green:0.920 blue:1.000 alpha:1.00]] forState:UIControlStateNormal];
         _btnStart.layer.masksToBounds = YES;
         _btnStart.layer.cornerRadius = 8;
