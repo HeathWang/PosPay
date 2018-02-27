@@ -49,7 +49,9 @@
     UIBarButtonItem *filterItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
     self.navigationItem.rightBarButtonItems = @[rightAdd, filterItem];
 
-    UIBarButtonItem *summaryButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(viewSummaryAction)];
+    UIButton *chartButton = [UIButton navButtonWithTitle:@"图表📈" font:[UIFont systemFontOfSize:16 weight:UIFontWeightMedium] titleColor:kThemeColor];
+    [chartButton addTarget:self action:@selector(viewSummaryAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *summaryButton = [[UIBarButtonItem alloc] initWithCustomView:chartButton];
     self.navigationItem.leftBarButtonItem = summaryButton;
 }
 
