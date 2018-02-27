@@ -17,6 +17,7 @@
 #import "HWBaseNavigationController.h"
 #import "HWSummaryController.h"
 #import "HWQueryRecordsController.h"
+#import "DateTools.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate>
 
@@ -63,7 +64,10 @@
 
 - (void)setupData {
     self.filterType = @0;
-    self.historyList = [[HWDayList allObjects] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
+    // 只显示最近一个月的数据
+    NSDate *laterDate = [[NSDate date] dateByAddingMonths:-1];
+    NSNumber *dayId = @([laterDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
+    self.historyList = [[HWDayList objectsWhere:@"dayId >= %@", dayId] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
 
     [self addDataBaseObserver];
 
