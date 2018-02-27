@@ -195,6 +195,7 @@
 }
 
 - (void)showDatePickerAction {
+    [self.view endEditing:YES];
     [HWDatePickerView showInView:self.navigationController.view delegate:self];
 }
 
