@@ -161,7 +161,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HWHalfYearSummaryCell *summaryCell = [tableView dequeueReusableCellWithClass:HWHalfYearSummaryCell.class forIndexPath:indexPath];
+
     [summaryCell updateSummaryCell:self.barDataSource[indexPath.row]];
+
     summaryCell.delegate = self;
     return summaryCell;
 }
@@ -179,6 +181,18 @@
 
     [self.navigationController pushViewController:monthDataListController animated:YES];
 }
+
+#pragma mark - UIScrollViewDelegate
+
+//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+//    NSArray *indexPaths = [self.tableView visibleCells];
+//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    NSArray *indexPaths = [self.tableView visibleCells];
+//    [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+//}
 
 
 #pragma mark - private method
@@ -252,6 +266,7 @@
 - (PNPieChart *)pieChart {
     if (!_pieChart) {
         _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 240, 240) items:nil];
+        _pieChart.descriptionTextFont = [UIFont systemFontOfSize:13 weight:UIFontWeightBold];
     }
     return _pieChart;
 }

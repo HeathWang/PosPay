@@ -43,11 +43,12 @@
     self.lblBank.text = summaryMonth.typeName;
 
     self.barChart.yValues = summaryMonth.yValues;
-    [self.barChart strokeChart];
+    
 //    if (!summaryMonth.hasStroke) {
-//
+//        
 //        summaryMonth.hasStroke = YES;
 //    }
+    [self.barChart strokeChart];
     self.barChart.xLabels = summaryMonth.xLabels;
     for (PNBar *bar in self.barChart.bars) {
         bar.textLayer.fontSize = 12;
