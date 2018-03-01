@@ -84,20 +84,7 @@
 
 - (void)updateCell:(HWRandom *)random {
 
-    switch (random.bankType.integerValue) {
-        case 1:
-            self.imgBank.image = [UIImage imageNamed:@"icon_bank_1"];
-            break;
-        case 2:
-            self.imgBank.image = [UIImage imageNamed:@"icon_bank_2"];
-            break;
-        case 3:
-            self.imgBank.image = [UIImage imageNamed:@"icon_bank_3"];
-            break;
-        default:
-            self.imgBank.image = [UIImage imageNamed:@"icon_bank_1"];
-            break;
-    }
+    self.imgBank.image = [UIImage imageNamed:[NSString stringWithFormat:@"icon_bank_%ld", random.bankType.integerValue]];
 
     switch (random.posType.integerValue) {
         case 1:

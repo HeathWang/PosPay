@@ -16,6 +16,8 @@
 #import "HWDateRangeModel.h"
 #import "HWMonthDataListController.h"
 #import "HWAppConfig.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+VBAdd.h"
 
 @interface HWSummaryController () <UITableViewDataSource, UITableViewDelegate, HalfYearSummaryCellDelegate>
 
@@ -85,6 +87,7 @@
 
 - (void)setupData {
 
+    [MBProgressHUD showHUDWithMessage:@"" toView:self.navigationController.view];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 
         // 查询汇总信息
@@ -112,6 +115,7 @@
         [self fetchMonthData];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
             self.lblTotal.attributedText = [self updateLabel:@"总金额：" value:self.total];
             self.lblCost.attributedText = [self updateLabel:@"总消耗：" value:self.cost];
             
@@ -121,9 +125,6 @@
             [self.tableView reloadData];
         });
 
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//        });
     });
 
 }

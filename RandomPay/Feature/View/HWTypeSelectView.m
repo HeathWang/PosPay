@@ -43,6 +43,12 @@
     [self.collectionView reloadData];
 }
 
+- (void)didMoveToSuperview {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    });
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -72,10 +78,10 @@
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         flowLayout.minimumLineSpacing = 10;
         flowLayout.minimumInteritemSpacing = 8;
-        flowLayout.itemSize = CGSizeMake(68, 40);
+        flowLayout.itemSize = CGSizeMake(80, 40);
 
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-        _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.showsHorizontalScrollIndicator = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor whiteColor];
 
