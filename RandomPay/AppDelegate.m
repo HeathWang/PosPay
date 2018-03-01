@@ -13,6 +13,7 @@
 #import "RLMRealmConfiguration.h"
 #import "RLMMigration.h"
 #import "HWRandom.h"
+#import "HWSettingsController.h"
 
 @interface AppDelegate ()
 
@@ -63,11 +64,22 @@
 - (void)initWindow {
     UIWindow *window1 = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+
     HWRandomMainController *mainController = [HWRandomMainController new];
     HWBaseNavigationController *rootNav = [[HWBaseNavigationController alloc] initWithRootViewController:mainController];
-    rootNav.hideLine = NO;
+    rootNav.hideLine = YES;
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0];
+    rootNav.tabBarItem = item1;
 
-    window1.rootViewController = rootNav;
+    HWBaseNavigationController *settingNav = [[HWBaseNavigationController alloc] initWithRootViewController:[HWSettingsController new]];
+    settingNav.hideLine = YES;
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemMore tag:0];
+    settingNav.tabBarItem = item2;
+
+    tabBarController.viewControllers = @[rootNav, settingNav];
+
+    window1.rootViewController = tabBarController;
     self.window = window1;
     [self.window makeKeyAndVisible];
 }
