@@ -97,19 +97,14 @@
         NSNumber *total_100 = [[HWRandom objectsWhere:@"costPercent == 0.0100"] sumOfProperty:@"value"];
         self.cost = @(total_38.floatValue * 0.0038 + total_60.floatValue * 0.0060 + total_100.floatValue * 0.0100);
 
-        self.zxTotal = [[HWRandom objectsWhere:@"bankType == 1"] sumOfProperty:@"value"];
-        self.zsTotal = [[HWRandom objectsWhere:@"bankType == 2"] sumOfProperty:@"value"];
-        self.pfTotal = [[HWRandom objectsWhere:@"bankType == 3"] sumOfProperty:@"value"];
-
         NSMutableArray *items = [NSMutableArray array];
-        if (self.zxTotal.floatValue > 0) {
-            [items addObject:[PNPieChartDataItem dataItemWithValue:self.zxTotal.floatValue color:[UIColor colorWithRed:0.831 green:0.039 blue:0.114 alpha:1.00] description:@"中信"]];
-        }
-        if (self.zsTotal.floatValue > 0) {
-            [items addObject:[PNPieChartDataItem dataItemWithValue:self.zsTotal.floatValue color:[UIColor colorWithRed:0.675 green:0.169 blue:0.224 alpha:1.00] description:@"招商"]];
-        }
-        if (self.pfTotal.floatValue > 0) {
-            [items addObject:[PNPieChartDataItem dataItemWithValue:self.pfTotal.floatValue color:[UIColor colorWithRed:0.016 green:0.212 blue:0.443 alpha:1.00] description:@"浦发"]];
+
+        for (int i = 0; i < [HWAppConfig sharedInstance].bankTypeList.count; i ++) {
+            NSNumber *costTotal = [[HWRandom objectsWhere:@"bankType == %@", @(i + 1)] sumOfProperty:@"value"];
+            if (costTotal.floatValue > 0) {
+                PNPieChartDataItem *dataItem = [PNPieChartDataItem dataItemWithValue:costTotal.floatValue color:[UIColor colorNamed:[NSString stringWithFormat:@"Color-%ld", (long) (i + 1)]] description:[HWAppConfig sharedInstance].bankTypeList[i]];
+                [items addObject:dataItem];
+            }
         }
 
         [self fetchMonthData];
@@ -200,7 +195,7 @@
     NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:3];
     NSArray *bankList = [HWAppConfig sharedInstance].bankTypeList;
 
-    for (int i = 0; i < 3; i ++) {
+    for (int i = 0; i < bankList.count; i ++) {
 
         NSMutableArray *valueList = [NSMutableArray arrayWithCapacity:6];
         NSMutableArray *monthNames = [NSMutableArray arrayWithCapacity:6];
