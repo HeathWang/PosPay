@@ -199,6 +199,7 @@
 
         NSMutableArray *valueList = [NSMutableArray arrayWithCapacity:6];
         NSMutableArray *monthNames = [NSMutableArray arrayWithCapacity:6];
+        float bankTotal = 0;
 
         for (int j = 0; j <= 5; j ++) {
             HWDateRangeModel *dateRangeModel = self.dateRangeList[j];
@@ -210,19 +211,20 @@
 
             if (total) {
                 [valueList addObject:total];
+                bankTotal += total.floatValue;
             } else {
                 [valueList addObject:@0];
             }
         }
 
-        HWSummaryMonthModel *monthModel = [HWSummaryMonthModel new];
-        monthModel.typeName = bankList[i];
-        monthModel.yValues = valueList;
-        monthModel.xLabels = monthNames;
-//        NSLog(@">%@", monthModel);
+        if (bankTotal > 0) {
+            HWSummaryMonthModel *monthModel = [HWSummaryMonthModel new];
+            monthModel.typeName = bankList[i];
+            monthModel.yValues = valueList;
+            monthModel.xLabels = monthNames;
 
-        [dataSource addObject:monthModel];
-
+            [dataSource addObject:monthModel];
+        }
     }
     self.barDataSource = dataSource;
 
