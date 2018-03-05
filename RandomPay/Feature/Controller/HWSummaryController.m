@@ -172,6 +172,14 @@
 
 - (void)yearSummaryCell:(HWHalfYearSummaryCell *)cell didTapBarAtIndex:(NSInteger)index {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+    HWSummaryMonthModel *summaryMonthModel = self.barDataSource[(NSUInteger) indexPath.row];
+    NSNumber *value = summaryMonthModel.yValues[index];
+
+    if (value.floatValue <= 0) {
+        return;
+    }
+
     NSNumber *bankType = @(indexPath.row + 1);
     HWDateRangeModel *dateRangeModel = self.dateRangeList[(NSUInteger) index];
 

@@ -10,6 +10,7 @@ def sharedPods
     pod 'MGSwipeTableCell', '~> 1.6.6'
     pod 'PNChart'
     pod 'DZNEmptyDataSet', '~> 1.8.1'
+    pod 'XHLaunchAd'
 end
 
 target 'RandomPay' do
