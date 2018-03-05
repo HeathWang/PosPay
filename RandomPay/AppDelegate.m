@@ -14,6 +14,8 @@
 #import "RLMMigration.h"
 #import "HWRandom.h"
 #import "HWSettingsController.h"
+#import "NSNumber+Random.h"
+#import <XHLaunchAd/XHLaunchAd.h>
 
 @interface AppDelegate ()
 
@@ -25,6 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self configRLMDatabase];
+    [self configAdImage];
     [self initWindow];
     [self configKeyboardManager];
     [self configGlobalUI];
@@ -47,6 +50,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self configAdImage];
 }
 
 
@@ -118,6 +122,25 @@
     [UITextField appearance].tintColor = kThemeColor;
     [UISwitch appearance].tintColor = kThemeColor;
     [UISlider appearance].tintColor = kThemeColor;
+}
+
+- (void)configAdImage {
+    [XHLaunchAd setLaunchSourceType:SourceTypeLaunchImage];
+
+    XHLaunchImageAdConfiguration *adConfiguration = [XHLaunchImageAdConfiguration new];
+    adConfiguration.frame = [UIScreen mainScreen].bounds;
+
+    NSNumber *index = [NSNumber randomFrom:1 to:6 ignoreDigits:NO hasDecimals:NO];
+    adConfiguration.imageNameOrURLString = [NSString stringWithFormat:@"ad_image_%ld.jpg", index.integerValue];
+    NSLog(@">>> image:%@", adConfiguration.imageNameOrURLString);
+
+    adConfiguration.contentMode = UIViewContentModeScaleAspectFill;
+    adConfiguration.showFinishAnimate = ShowFinishAnimateFadein;
+    adConfiguration.skipButtonType = SkipTypeTimeText;
+    adConfiguration.showEnterForeground = YES;
+    adConfiguration.duration = 3;
+
+    [XHLaunchAd imageAdWithImageAdConfiguration:adConfiguration];
 }
 
 
