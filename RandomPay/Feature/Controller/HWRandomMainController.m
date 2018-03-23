@@ -18,6 +18,7 @@
 #import "HWSummaryController.h"
 #import "HWQueryRecordsController.h"
 #import "DateTools.h"
+#import "HWAddARecordController.h"
 
 @interface HWRandomMainController () <UITableViewDataSource, UITableViewDelegate, MGSwipeTableCellDelegate, UIActionSheetDelegate>
 
@@ -220,7 +221,7 @@
 
 
 - (void)addRecordAction {
-    HWAddRecordController *addRecordController = [HWAddRecordController new];
+    HWAddARecordController *addRecordController = [HWAddARecordController new];
     HWBaseNavigationController *nav = [[HWBaseNavigationController alloc] initWithRootViewController:addRecordController];
     [self.navigationController presentViewController:nav animated:YES completion:^{
 

@@ -8,6 +8,7 @@
 
 #import "HWTypeSelectView.h"
 #import "HWPosTypeCollectionCell.h"
+#import "UIView+HWAdd.h"
 
 @interface HWTypeSelectView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -15,6 +16,7 @@
 @property (nonatomic, assign) NSInteger selectIndex;
 
 @property (nonatomic, copy) NSArray *typeList;
+
 @end
 
 @implementation HWTypeSelectView
@@ -43,10 +45,15 @@
     [self.collectionView reloadData];
 }
 
+- (void)setDataSource:(NSArray *)list {
+    self.typeList = list;
+    [self.collectionView reloadData];
+}
+
 - (void)didMoveToSuperview {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+//    });
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -54,6 +61,11 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.selectIndex = indexPath.row;
     [collectionView reloadData];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectedAtIndex:inCell:)]) {
+
+        [self.delegate didSelectedAtIndex:indexPath.row inCell:self.tableViewCell];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -75,16 +87,17 @@
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
         flowLayout.minimumLineSpacing = 10;
         flowLayout.minimumInteritemSpacing = 8;
-        flowLayout.itemSize = CGSizeMake(80, 40);
+        CGFloat itemWidth = (ScreenWidth - 14 * 2 - 8 * 3) / 4;
+        flowLayout.itemSize = CGSizeMake(itemWidth, IPHONEPLUS(40));
 
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
         _collectionView.showsHorizontalScrollIndicator = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor whiteColor];
-
+        _collectionView.contentInset = UIEdgeInsetsMake(14, 14, 0, 14);
 
         [HWPosTypeCollectionCell registerIn:_collectionView];
         _collectionView.delegate = self;

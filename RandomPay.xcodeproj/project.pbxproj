@@ -43,6 +43,9 @@
 		7EAC04D52043E8590092D634 /* HWQueryOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D42043E8590092D634 /* HWQueryOptionsView.m */; };
 		7EAC04D82043EDB30092D634 /* HWDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D72043EDB30092D634 /* HWDatePickerView.m */; };
 		7EAC04DB20443D6D0092D634 /* EPEmptyDataProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC04D920443D6C0092D634 /* EPEmptyDataProtocol.m */; };
+		7EBBCAAB2063A1C600BF9319 /* HWAddARecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBBCAAA2063A1C600BF9319 /* HWAddARecordController.m */; };
+		7EBBCAAE2063AB2900BF9319 /* HWTypeSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBBCAAD2063AB2900BF9319 /* HWTypeSelectCell.m */; };
+		7EBBCAB12064AA4500BF9319 /* UIView+HWAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBBCAB02064AA4500BF9319 /* UIView+HWAdd.m */; };
 		7EF117712047CB8000C88A2F /* HWSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EF117702047CB7F00C88A2F /* HWSettingsController.m */; };
 		7EF1177A204D14CF00C88A2F /* ad_image_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7EF11775204D14CF00C88A2F /* ad_image_3.jpg */; };
 		7EF1177B204D14CF00C88A2F /* ad_image_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7EF11776204D14CF00C88A2F /* ad_image_1.jpg */; };
@@ -129,6 +132,12 @@
 		7EAC04D72043EDB30092D634 /* HWDatePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDatePickerView.m; sourceTree = "<group>"; };
 		7EAC04D920443D6C0092D634 /* EPEmptyDataProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EPEmptyDataProtocol.m; sourceTree = "<group>"; };
 		7EAC04DA20443D6D0092D634 /* EPEmptyDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPEmptyDataProtocol.h; sourceTree = "<group>"; };
+		7EBBCAA92063A1C600BF9319 /* HWAddARecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWAddARecordController.h; sourceTree = "<group>"; };
+		7EBBCAAA2063A1C600BF9319 /* HWAddARecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWAddARecordController.m; sourceTree = "<group>"; };
+		7EBBCAAC2063AB2900BF9319 /* HWTypeSelectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWTypeSelectCell.h; sourceTree = "<group>"; };
+		7EBBCAAD2063AB2900BF9319 /* HWTypeSelectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWTypeSelectCell.m; sourceTree = "<group>"; };
+		7EBBCAAF2064AA4500BF9319 /* UIView+HWAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+HWAdd.h"; sourceTree = "<group>"; };
+		7EBBCAB02064AA4500BF9319 /* UIView+HWAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+HWAdd.m"; sourceTree = "<group>"; };
 		7EF1176F2047CB7F00C88A2F /* HWSettingsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWSettingsController.h; sourceTree = "<group>"; };
 		7EF117702047CB7F00C88A2F /* HWSettingsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWSettingsController.m; sourceTree = "<group>"; };
 		7EF11775204D14CF00C88A2F /* ad_image_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ad_image_3.jpg; sourceTree = "<group>"; };
@@ -180,6 +189,8 @@
 				7EAC04D12043E1090092D634 /* HWQueryRecordsController.m */,
 				7EF1176F2047CB7F00C88A2F /* HWSettingsController.h */,
 				7EF117702047CB7F00C88A2F /* HWSettingsController.m */,
+				7EBBCAA92063A1C600BF9319 /* HWAddARecordController.h */,
+				7EBBCAAA2063A1C600BF9319 /* HWAddARecordController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -260,6 +271,8 @@
 				7E066C2B2022B203001C38B6 /* UITextField+Addition.m */,
 				7E6BB3FA202FDE3A00E99EEE /* NSString+HWAdd.h */,
 				7E6BB3FB202FDE3A00E99EEE /* NSString+HWAdd.m */,
+				7EBBCAAF2064AA4500BF9319 /* UIView+HWAdd.h */,
+				7EBBCAB02064AA4500BF9319 /* UIView+HWAdd.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -312,6 +325,8 @@
 				7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */,
 				7EAC04CA2043B2630092D634 /* HWPosTypeCollectionCell.h */,
 				7EAC04CB2043B2630092D634 /* HWPosTypeCollectionCell.m */,
+				7EBBCAAC2063AB2900BF9319 /* HWTypeSelectCell.h */,
+				7EBBCAAD2063AB2900BF9319 /* HWTypeSelectCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -493,6 +508,8 @@
 				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,
 				7EAC04D82043EDB30092D634 /* HWDatePickerView.m in Sources */,
 				7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */,
+				7EBBCAAB2063A1C600BF9319 /* HWAddARecordController.m in Sources */,
+				7EBBCAAE2063AB2900BF9319 /* HWTypeSelectCell.m in Sources */,
 				7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */,
 				7EAC04D52043E8590092D634 /* HWQueryOptionsView.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
@@ -505,6 +522,7 @@
 				7E6BB3F92028459C00E99EEE /* HWSummaryMonthModel.m in Sources */,
 				7EA29FD52015B6A600336040 /* UIImage+Addition.m in Sources */,
 				7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */,
+				7EBBCAB12064AA4500BF9319 /* UIView+HWAdd.m in Sources */,
 				7EA29FCA2015B65B00336040 /* UITableView+Addition.m in Sources */,
 				7EA29FCB2015B65B00336040 /* UITableViewCell+Register.m in Sources */,
 				7EA29FEE201B113C00336040 /* HWDaySectionHeader.m in Sources */,
