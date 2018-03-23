@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7E066C2C2022B203001C38B6 /* UITextField+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C2B2022B203001C38B6 /* UITextField+Addition.m */; };
-		7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */; };
 		7E066C3220231292001C38B6 /* HWSummaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E066C3120231292001C38B6 /* HWSummaryController.m */; };
 		7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F4202844BA00E99EEE /* HWHalfYearSummaryCell.m */; };
 		7E6BB3F92028459C00E99EEE /* HWSummaryMonthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3F82028459C00E99EEE /* HWSummaryMonthModel.m */; };
@@ -61,8 +60,6 @@
 		62746C6D62B5103C39EC280F /* Pods-RandomPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RandomPay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay.debug.xcconfig"; sourceTree = "<group>"; };
 		7E066C2A2022B203001C38B6 /* UITextField+Addition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+Addition.h"; sourceTree = "<group>"; };
 		7E066C2B2022B203001C38B6 /* UITextField+Addition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Addition.m"; sourceTree = "<group>"; };
-		7E066C2D2022EE4E001C38B6 /* HWAddRecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWAddRecordController.h; sourceTree = "<group>"; };
-		7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWAddRecordController.m; sourceTree = "<group>"; };
 		7E066C3020231292001C38B6 /* HWSummaryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWSummaryController.h; sourceTree = "<group>"; };
 		7E066C3120231292001C38B6 /* HWSummaryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWSummaryController.m; sourceTree = "<group>"; };
 		7E6BB3F3202844BA00E99EEE /* HWHalfYearSummaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWHalfYearSummaryCell.h; sourceTree = "<group>"; };
@@ -179,8 +176,6 @@
 			children = (
 				7EA29FBA2015B28E00336040 /* HWRandomMainController.h */,
 				7EA29FBB2015B28E00336040 /* HWRandomMainController.m */,
-				7E066C2D2022EE4E001C38B6 /* HWAddRecordController.h */,
-				7E066C2E2022EE4E001C38B6 /* HWAddRecordController.m */,
 				7E066C3020231292001C38B6 /* HWSummaryController.h */,
 				7E066C3120231292001C38B6 /* HWSummaryController.m */,
 				7E6BB4022030279700E99EEE /* HWMonthDataListController.h */,
@@ -507,7 +502,6 @@
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
 				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,
 				7EAC04D82043EDB30092D634 /* HWDatePickerView.m in Sources */,
-				7E066C2F2022EE4E001C38B6 /* HWAddRecordController.m in Sources */,
 				7EBBCAAB2063A1C600BF9319 /* HWAddARecordController.m in Sources */,
 				7EBBCAAE2063AB2900BF9319 /* HWTypeSelectCell.m in Sources */,
 				7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */,

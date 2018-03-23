@@ -40,20 +40,10 @@
     return [[self alloc] initWithTypeList:typeList];
 }
 
-- (void)changeSelectIndex:(NSInteger)index {
+- (void)setDataSource:(NSArray *)list selected:(NSInteger)index {
     self.selectIndex = index;
-    [self.collectionView reloadData];
-}
-
-- (void)setDataSource:(NSArray *)list {
     self.typeList = list;
     [self.collectionView reloadData];
-}
-
-- (void)didMoveToSuperview {
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-//    });
 }
 
 #pragma mark - UICollectionViewDelegate

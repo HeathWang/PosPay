@@ -13,7 +13,6 @@
 #import "HWRandom.h"
 #import "HWDayList.h"
 #import "HWDaySectionHeader.h"
-#import "HWAddRecordController.h"
 #import "HWBaseNavigationController.h"
 #import "HWSummaryController.h"
 #import "HWQueryRecordsController.h"
@@ -200,7 +199,7 @@
         [realm commitWriteTransaction];
     } else if (index == 1) {
         // edit action
-        HWAddRecordController *addRecordController = [HWAddRecordController new];
+        HWAddARecordController *addRecordController = [HWAddARecordController new];
         addRecordController.isEdit = YES;
         addRecordController.rid = hwRandom.rid;
 

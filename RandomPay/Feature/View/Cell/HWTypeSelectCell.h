@@ -14,10 +14,8 @@
 
 @property (nonatomic, strong) HWTypeSelectView *typeSelectView;
 
+- (void)updateCellList:(NSArray *)list selectedIndex:(NSInteger)index;
+
 + (CGFloat)calculateCellHeight:(NSInteger)count;
-
-- (void)updateCellList:(NSArray *)list;
-
-
 
 @end

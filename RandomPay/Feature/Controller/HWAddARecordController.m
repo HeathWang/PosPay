@@ -17,6 +17,7 @@
 #import "HWTypeSelectCell.h"
 #import "HWAppConfig.h"
 #import "HWTypeSelectView.h"
+#import "HWDayList.h"
 
 @interface HWAddARecordController () <UITableViewDataSource, UITableViewDelegate, HWDatePickerViewDelegate, HWTypeSelectViewDelegate>
 
@@ -28,6 +29,10 @@
 
 @property (nonatomic, strong) HWRandom *random;
 @property (nonatomic, copy) NSDate *selectDate;
+
+@property (nonatomic, assign) NSInteger indexWithCost;
+@property (nonatomic, assign) NSInteger indexWithBank;
+@property (nonatomic, assign) NSInteger indexWithPay;
 
 
 @end
@@ -56,7 +61,29 @@
 }
 
 - (void)setupData {
-    self.selectDate = [NSDate date];
+
+    if (self.isEdit) {
+        self.random = [HWRandom objectForPrimaryKey:self.rid];
+        if (self.random) {
+            self.selectDate = self.random.randomDate;
+
+            NSInteger index = [[HWAppConfig sharedInstance].posCostValueList indexOfObject:@(self.random.costPercent.floatValue)];
+            if (index != NSNotFound) {
+                self.indexWithCost = index;
+            }
+
+            self.fldAmount.text = [NSString stringWithFormat:@"%.1f", self.random.value.floatValue];
+
+            self.indexWithBank = self.random.bankType.integerValue - 1;
+            self.indexWithPay = self.random.posType.integerValue - 1;
+        }
+    } else {
+        self.indexWithCost = 2;
+        self.indexWithBank = 0;
+        self.indexWithBank = 0;
+
+        self.selectDate = [NSDate date];
+    }
 }
 
 - (void)setupView {
@@ -87,13 +114,13 @@
 
     switch (indexPath.section) {
         case 1:
-            [selectCell updateCellList:[HWAppConfig sharedInstance].bankTypeList];
+            [selectCell updateCellList:[HWAppConfig sharedInstance].bankTypeList selectedIndex:self.indexWithBank];
             break;
         case 2:
-            [selectCell updateCellList:[HWAppConfig sharedInstance].posTypeList];
+            [selectCell updateCellList:[HWAppConfig sharedInstance].posTypeList selectedIndex:self.indexWithPay];
             break;
         default:
-            [selectCell updateCellList:[HWAppConfig sharedInstance].posCostStrList];
+            [selectCell updateCellList:[HWAppConfig sharedInstance].posCostStrList selectedIndex:self.indexWithCost];
             break;
     }
     return selectCell;
@@ -172,9 +199,28 @@
 #pragma mark - HWTypeSelectViewDelegate
 
 - (void)didSelectedAtIndex:(NSInteger)index inCell:(UITableViewCell *)cell {
-
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"%ld - %ld", indexPath.row, indexPath.section);
+    switch (indexPath.section) {
+        case 0:
+        {
+            self.indexWithCost = index;
+        }
+            break;
+        case 1:
+        {
+            self.indexWithBank = index;
+        }
+            break;
+        case 2:
+        {
+            self.indexWithPay = index;
+        }
+            break;
+        default:
+            break;
+    }
 }
-
 
 #pragma mark - touch action
 
@@ -192,7 +238,89 @@
 - (void)submitAction {
     [self.view endEditing:YES];
 
+    if (self.fldAmount.text.floatValue <= 0) {
+        [MBProgressHUD showInfo:@"金额必须大于0" toView:self.view hideDelay:1.5];
+        return;
+    }
 
+    RLMRealm *realm = [RLMRealm defaultRealm];
+
+    NSDate *previousDate = [self.random.randomDate copy];
+    NSNumber *previousDayId = @([previousDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
+
+    NSNumber *dayId = @([self.selectDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
+
+    if (self.isEdit) {
+        [realm beginWriteTransaction];
+
+        self.random.bankType = @(self.indexWithBank + 1);
+        self.random.posType = @(self.indexWithPay + 1);
+        self.random.costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) self.indexWithCost];
+        self.random.randomDate = self.selectDate;
+        self.random.value = @(self.fldAmount.text.floatValue);
+
+        if ([previousDate isSameDay:self.selectDate]) {
+            [realm addOrUpdateObject:self.random];
+        } else {
+            HWDayList *preDay = [HWDayList objectForPrimaryKey:previousDayId];
+            NSInteger index = [preDay.randoms indexOfObjectWhere:@"rid = %@", self.random.rid];
+            if (index != NSNotFound) {
+                [preDay.randoms removeObjectAtIndex:(NSUInteger) index];
+
+                if (preDay.randoms.count <= 0) {
+                    [realm deleteObject:preDay];
+                } else {
+                    [realm addOrUpdateObject:preDay];
+                }
+
+            }
+
+            RLMResults *originDayResult = [HWDayList objectsWhere:@"dayId = %@", dayId];
+            if (originDayResult.count > 0) {
+                HWDayList *originDayList = originDayResult[0];
+                [originDayList.randoms addObject:self.random];
+                [realm addOrUpdateObject:originDayList];
+            } else {
+                HWDayList *dayList = [HWDayList new];
+                dayList.dayId = dayId;
+                dayList.dateStr = [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd"];
+                [dayList.randoms addObject:self.random];
+
+                [realm addOrUpdateObject:dayList];
+            }
+        }
+
+        [realm commitWriteTransaction];
+
+        [self closeAction];
+    } else {
+
+        HWRandom *random1 = [HWRandom new];
+        random1.randomDate = self.selectDate;
+        random1.value = @(self.fldAmount.text.floatValue);
+        random1.costPercent = [HWAppConfig sharedInstance].posCostValueList[(NSUInteger) self.indexWithCost];;
+        random1.bankType = @(self.indexWithBank + 1);
+        random1.posType = @(self.indexWithPay + 1);
+
+        [realm beginWriteTransaction];
+
+        RLMResults *originDayResult = [HWDayList objectsWhere:@"dayId = %@", dayId];
+        if (originDayResult.count > 0) {
+            HWDayList *originDayList = originDayResult[0];
+            [originDayList.randoms addObject:random1];
+            [realm addOrUpdateObject:originDayList];
+        } else {
+            HWDayList *dayList = [HWDayList new];
+            dayList.dayId = dayId;
+            dayList.dateStr = [self.selectDate formattedDateWithFormat:@"yyyy-MM-dd"];
+            [dayList.randoms addObject:random1];
+
+            [realm addOrUpdateObject:dayList];
+        }
+
+        [realm commitWriteTransaction:NULL];
+        [self closeAction];
+    }
 }
 
 #pragma mark - Getter

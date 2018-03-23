@@ -28,10 +28,9 @@
     return self;
 }
 
-- (void)updateCellList:(NSArray *)list {
-    [self.typeSelectView setDataSource:list];
+- (void)updateCellList:(NSArray *)list selectedIndex:(NSInteger)index {
+    [self.typeSelectView setDataSource:list selected:index];
 }
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

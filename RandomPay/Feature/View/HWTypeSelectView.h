@@ -22,11 +22,8 @@
 
 - (instancetype)initWithTypeList:(NSArray *)typeList;
 
-- (void)changeSelectIndex:(NSInteger)index;
-
-- (void)setDataSource:(NSArray *)list;
+- (void)setDataSource:(NSArray *)list selected:(NSInteger)index;
 
 + (instancetype)viewWithTypeList:(NSArray *)typeList;
-
 
 @end
