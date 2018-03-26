@@ -96,5 +96,17 @@
     return _collectionView;
 }
 
+#pragma mark - Setter
+
+- (void)setScrollDirection:(UICollectionViewScrollDirection)scrollDirection {
+    _scrollDirection = scrollDirection;
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout;
+    flowLayout.scrollDirection = scrollDirection;
+    self.collectionView.collectionViewLayout = flowLayout;
+    if (scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+        self.collectionView.contentInset = UIEdgeInsetsZero;
+    }
+}
+
 
 @end

@@ -19,6 +19,7 @@
 
 @property (nonatomic, assign, readonly) NSInteger selectIndex;
 @property (nonatomic, weak) id <HWTypeSelectViewDelegate> delegate;
+@property (nonatomic, assign) UICollectionViewScrollDirection scrollDirection;
 
 - (instancetype)initWithTypeList:(NSArray *)typeList;
 

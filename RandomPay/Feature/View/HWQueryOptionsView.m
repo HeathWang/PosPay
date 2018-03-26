@@ -204,6 +204,7 @@
         NSMutableArray *list = [[HWAppConfig sharedInstance].posCostStrList mutableCopy];
         [list insertObject:@"全部" atIndex:0];
         _posCostSelectView = [[HWTypeSelectView alloc] initWithTypeList:list];
+        _posCostSelectView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
     return _posCostSelectView;
 }
@@ -213,6 +214,7 @@
         NSMutableArray *list = [[HWAppConfig sharedInstance].bankTypeList mutableCopy];
         [list insertObject:@"全部" atIndex:0];
         _bankSelectView = [[HWTypeSelectView alloc] initWithTypeList:list];
+        _bankSelectView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
     return _bankSelectView;
 }
@@ -222,6 +224,7 @@
         NSMutableArray *list = [[HWAppConfig sharedInstance].posTypeList mutableCopy];
         [list insertObject:@"全部" atIndex:0];
         _posTypeSelectView = [[HWTypeSelectView alloc] initWithTypeList:list];
+        _posTypeSelectView.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
     return _posTypeSelectView;
 }
