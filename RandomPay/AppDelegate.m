@@ -15,7 +15,11 @@
 #import "HWRandom.h"
 #import "HWSettingsController.h"
 #import "NSNumber+Random.h"
+#import "HWBank.h"
+#import "HWPayRate.h"
+#import "HWPayType.h"
 #import <XHLaunchAd/XHLaunchAd.h>
+#import "HWAppConfig.h"
 
 @interface AppDelegate ()
 
@@ -95,24 +99,95 @@
 
 - (void)configRLMDatabase {
 
-    NSLog(@">>> %@", [RLMRealmConfiguration defaultConfiguration].fileURL);
-    RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
-    uint64_t version = 3;
-    configuration.schemaVersion = version;
-    configuration.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
-        if (oldSchemaVersion < version) {
-            // do some action.
-        }
-    };
-    [RLMRealmConfiguration setDefaultConfiguration:configuration];
-    [RLMRealm defaultRealm];
+    /**
+     version3 新增posType
+     version4 新增HWBank， HWPayRate， HWPayType， HWTag数据库对象
+     */
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSLog(@">>> %@", [RLMRealmConfiguration defaultConfiguration].fileURL);
+        RLMRealmConfiguration *configuration = [RLMRealmConfiguration defaultConfiguration];
+        uint64_t version = 4;
+        configuration.schemaVersion = version;
+        configuration.migrationBlock = ^(RLMMigration *migration, uint64_t oldSchemaVersion) {
+            if (oldSchemaVersion < version) {
+                // do some action.
+            }
+        };
+        [RLMRealmConfiguration setDefaultConfiguration:configuration];
+        [RLMRealm defaultRealm];
+        
+        // version3 新增posType，默认设置为1
+        RLMRealm *realm = [RLMRealm defaultRealm];
+        [realm beginWriteTransaction];
+        RLMResults *randoms = [HWRandom objectsInRealm:realm where:@"posType = null"];
+        [randoms setValue:@(1) forKeyPath:@"posType"];
+        [realm commitWriteTransaction];
 
-    // version3 新增posType，默认设置为1
+        [self initializeDB];
+    });
+}
+
+- (void)initializeDB {
     RLMRealm *realm = [RLMRealm defaultRealm];
-    [realm beginWriteTransaction];
-    RLMResults *randoms = [HWRandom objectsInRealm:realm where:@"posType = null"];
-    [randoms setValue:@(1) forKeyPath:@"posType"];
-    [realm commitWriteTransaction];
+    NSError *error;
+
+    RLMResults<HWBank *> *bankList = [HWBank allObjectsInRealm:realm];
+    if (bankList.count <= 0) {
+        // 银行列表不存在，强制初始化列表
+
+        [realm beginWriteTransaction];
+        for (int i = 0; i < [HWAppConfig sharedInstance].bankTypeList.count; ++i) {
+            HWBank *bank = [HWBank new];
+            bank.bankName = [HWAppConfig sharedInstance].bankTypeList[i];
+            bank.weight = @(i);
+            [realm addObject:bank];
+        }
+
+        [realm commitWriteTransaction:&error];
+
+        if (error) {
+            NSLog(@"insert bank error: %@", error);
+        }
+    }
+
+    RLMResults<HWPayRate *> *rateList = [HWPayRate allObjectsInRealm:realm];
+    if (rateList.count <= 0) {
+        // 刷卡费率不存在，强制初始化列表
+
+        [realm beginWriteTransaction];
+
+        for (int i = 0; i < [HWAppConfig sharedInstance].posCostStrList.count; ++i) {
+            HWPayRate *rate = [HWPayRate new];
+            rate.weight = @(i);
+            rate.rate = [HWAppConfig sharedInstance].posCostValueList[i];
+            [realm addObject:rate];
+        }
+
+        [realm commitWriteTransaction:&error];
+
+        if (error) {
+            NSLog(@"insert pay rate error: %@", error);
+        }
+    }
+
+    RLMResults<HWPayType *> *typeList = [HWPayType allObjectsInRealm:realm];
+    if (typeList.count <= 0) {
+        // 刷卡类型不存在，强制初始化
+        [realm beginWriteTransaction];
+
+        for (int i = 0; i < [HWAppConfig sharedInstance].posTypeList.count; ++i) {
+            HWPayType *payType = [HWPayType new];
+            payType.weight = @(i);
+            payType.payTypeName = [HWAppConfig sharedInstance].posTypeList[i];
+            [realm addObject:payType];
+        }
+
+        [realm commitWriteTransaction:&error];
+        if (error) {
+            NSLog(@"insert pay type:%@", error);
+        }
+
+    }
 }
 
 - (void)configGlobalUI {

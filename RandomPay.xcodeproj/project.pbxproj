@@ -14,6 +14,10 @@
 		7E6BB3FC202FDE3A00E99EEE /* NSString+HWAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3FB202FDE3A00E99EEE /* NSString+HWAdd.m */; };
 		7E6BB3FF2030241C00E99EEE /* HWDateRangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */; };
 		7E6BB4042030279700E99EEE /* HWMonthDataListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BB4032030279700E99EEE /* HWMonthDataListController.m */; };
+		7E972A612068997C00B64B78 /* HWBank.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E972A602068997C00B64B78 /* HWBank.m */; };
+		7E972A64206899A400B64B78 /* HWPayRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E972A63206899A400B64B78 /* HWPayRate.m */; };
+		7E972A67206899C300B64B78 /* HWPayType.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E972A66206899C300B64B78 /* HWPayType.m */; };
+		7E972A6A20689BC200B64B78 /* HWTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E972A6920689BC200B64B78 /* HWTag.m */; };
 		7EA29F9A2015ABCE00336040 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA29F992015ABCE00336040 /* AppDelegate.m */; };
 		7EA29FA22015ABCE00336040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA12015ABCE00336040 /* Assets.xcassets */; };
 		7EA29FA52015ABCE00336040 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA29FA32015ABCE00336040 /* LaunchScreen.storyboard */; };
@@ -72,6 +76,14 @@
 		7E6BB3FE2030241C00E99EEE /* HWDateRangeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWDateRangeModel.m; sourceTree = "<group>"; };
 		7E6BB4022030279700E99EEE /* HWMonthDataListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWMonthDataListController.h; sourceTree = "<group>"; };
 		7E6BB4032030279700E99EEE /* HWMonthDataListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWMonthDataListController.m; sourceTree = "<group>"; };
+		7E972A5F2068997C00B64B78 /* HWBank.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWBank.h; sourceTree = "<group>"; };
+		7E972A602068997C00B64B78 /* HWBank.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWBank.m; sourceTree = "<group>"; };
+		7E972A62206899A400B64B78 /* HWPayRate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWPayRate.h; sourceTree = "<group>"; };
+		7E972A63206899A400B64B78 /* HWPayRate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWPayRate.m; sourceTree = "<group>"; };
+		7E972A65206899C300B64B78 /* HWPayType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWPayType.h; sourceTree = "<group>"; };
+		7E972A66206899C300B64B78 /* HWPayType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWPayType.m; sourceTree = "<group>"; };
+		7E972A6820689BC200B64B78 /* HWTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HWTag.h; sourceTree = "<group>"; };
+		7E972A6920689BC200B64B78 /* HWTag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWTag.m; sourceTree = "<group>"; };
 		7EA29F952015ABCE00336040 /* RandomPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RandomPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA29F982015ABCE00336040 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7EA29F992015ABCE00336040 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -289,6 +301,14 @@
 				7EA29FE12015D38A00336040 /* HWRandom.m */,
 				7EA29FE9201B075500336040 /* HWDayList.h */,
 				7EA29FEA201B075500336040 /* HWDayList.m */,
+				7E972A5F2068997C00B64B78 /* HWBank.h */,
+				7E972A602068997C00B64B78 /* HWBank.m */,
+				7E972A62206899A400B64B78 /* HWPayRate.h */,
+				7E972A63206899A400B64B78 /* HWPayRate.m */,
+				7E972A65206899C300B64B78 /* HWPayType.h */,
+				7E972A66206899C300B64B78 /* HWPayType.m */,
+				7E972A6820689BC200B64B78 /* HWTag.h */,
+				7E972A6920689BC200B64B78 /* HWTag.m */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -492,6 +512,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E972A64206899A400B64B78 /* HWPayRate.m in Sources */,
 				7EA29FDE2015C8D700336040 /* NSNumber+Random.m in Sources */,
 				7EA29FE82015E05600336040 /* NSUserDefaults+HWCache.m in Sources */,
 				7EA29FD82015BB7200336040 /* HWRandomView.m in Sources */,
@@ -500,10 +521,12 @@
 				7E6BB3FF2030241C00E99EEE /* HWDateRangeModel.m in Sources */,
 				7E6BB3FC202FDE3A00E99EEE /* NSString+HWAdd.m in Sources */,
 				7EA29FE52015D84E00336040 /* HWRandomHistoryCell.m in Sources */,
+				7E972A67206899C300B64B78 /* HWPayType.m in Sources */,
 				7E6BB3F5202844BA00E99EEE /* HWHalfYearSummaryCell.m in Sources */,
 				7EAC04D82043EDB30092D634 /* HWDatePickerView.m in Sources */,
 				7EBBCAAB2063A1C600BF9319 /* HWAddARecordController.m in Sources */,
 				7EBBCAAE2063AB2900BF9319 /* HWTypeSelectCell.m in Sources */,
+				7E972A6A20689BC200B64B78 /* HWTag.m in Sources */,
 				7EAC04C92043AE0B0092D634 /* HWTypeSelectView.m in Sources */,
 				7EAC04D52043E8590092D634 /* HWQueryOptionsView.m in Sources */,
 				7EA29FBC2015B28E00336040 /* HWRandomMainController.m in Sources */,
@@ -528,6 +551,7 @@
 				7E6BB4042030279700E99EEE /* HWMonthDataListController.m in Sources */,
 				7EA29FCE2015B65B00336040 /* UIButton+Addition.m in Sources */,
 				7EA29FEB201B075500336040 /* HWDayList.m in Sources */,
+				7E972A612068997C00B64B78 /* HWBank.m in Sources */,
 				7E066C2C2022B203001C38B6 /* UITextField+Addition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
