@@ -127,7 +127,8 @@
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     HWDaySectionHeader *sectionHeader = [tableView dequeueReusableHeaderFooterViewWithClass:HWDaySectionHeader.class];
     HWDayList *dayList = self.historyList[section];
-    sectionHeader.lblTitle.text = dayList.dateStr;
+    NSNumber *total = [dayList.randoms sumOfProperty:@"value"];
+    sectionHeader.lblTitle.text = [NSString stringWithFormat:@"%@    %.1f¥", dayList.dateStr, total.floatValue];
     return sectionHeader;
 }
 
