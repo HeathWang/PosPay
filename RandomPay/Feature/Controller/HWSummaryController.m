@@ -24,10 +24,8 @@
 // data
 @property (nonatomic, copy) NSNumber *total;
 @property (nonatomic, copy) NSNumber *cost;
-
-@property (nonatomic, copy) NSNumber *zxTotal;
-@property (nonatomic, copy) NSNumber *zsTotal;
-@property (nonatomic, copy) NSNumber *pfTotal;
+@property (nonatomic, copy) NSNumber *halfTotal;
+@property (nonatomic, copy) NSNumber *halfPercent;
 
 @property (nonatomic, strong) NSMutableArray *barDataSource;
 @property (nonatomic, copy) NSArray<HWDateRangeModel *> *dateRangeList;
@@ -35,6 +33,7 @@
 // ui
 @property (nonatomic, strong) UILabel *lblTotal;
 @property (nonatomic, strong) UILabel *lblCost;
+@property (nonatomic, strong) UILabel *lblHalfYearCost;
 
 @property (nonatomic, strong) PNPieChart *pieChart;
 
@@ -65,6 +64,7 @@
 
     [self.tableHeader addSubview:self.lblTotal];
     [self.tableHeader addSubview:self.lblCost];
+    [self.tableHeader addSubview:self.lblHalfYearCost];
     [self.tableHeader addSubview:self.pieChart];
 
     [self.lblTotal mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,10 +77,15 @@
         make.top.equalTo(self.lblTotal.mas_bottom).offset(5);
     }];
 
+    [self.lblHalfYearCost mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@14);
+        make.top.equalTo(self.lblCost.mas_bottom).offset(5);
+    }];
+
     [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(self.pieChart.frame.size);
         make.centerX.equalTo(@0);
-        make.top.equalTo(self.lblCost.mas_bottom).offset(10);
+        make.top.equalTo(self.lblHalfYearCost.mas_bottom).offset(10);
     }];
 
 }
@@ -111,8 +116,9 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-            self.lblTotal.attributedText = [self updateLabel:@"总金额：" value:self.total];
-            self.lblCost.attributedText = [self updateLabel:@"总消耗：" value:self.cost];
+            self.lblTotal.attributedText = [self updateLabel:@"总金额：" valueStr:[NSString stringWithFormat:@"%.2f", self.total.floatValue]];
+            self.lblCost.attributedText = [self updateLabel:@"总消耗：" valueStr:[NSString stringWithFormat:@"%.2f", self.cost.floatValue]];
+            self.lblHalfYearCost.attributedText = [self updateLabel:@"近6个月消费：" valueStr:[NSString stringWithFormat:@"%.2f  %.2f%%", self.halfTotal.floatValue, self.halfPercent.floatValue * 100]];
             
             [self.pieChart updateChartData:items];
             [self.pieChart strokeChart];
@@ -205,11 +211,11 @@
 
 #pragma mark - private method
 
-- (NSAttributedString *)updateLabel:(NSString *)title value:(NSNumber *)value {
-    NSString *valueStr = [NSString stringWithFormat:@"%.2f", value.floatValue];
+- (NSAttributedString *)updateLabel:(NSString *)title valueStr:(NSString *)valueStr {
+
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", title, valueStr]];
     [attr addAttributes:@{NSForegroundColorAttributeName: [UIColor darkTextColor], NSFontAttributeName: [UIFont systemFontOfSize:16]} range:NSMakeRange(0, title.length)];
-    [attr addAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:1.000 green:0.161 blue:0.408 alpha:1.00], NSFontAttributeName: [UIFont systemFontOfSize:30 weight:UIFontWeightSemibold]} range:NSMakeRange(title.length, valueStr.length)];
+    [attr addAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:1.000 green:0.161 blue:0.408 alpha:1.00], NSFontAttributeName: [UIFont systemFontOfSize:14 weight:UIFontWeightSemibold]} range:NSMakeRange(title.length, valueStr.length)];
     return attr;
 }
 
@@ -217,6 +223,7 @@
     NSMutableArray *dataSource = [NSMutableArray arrayWithCapacity:3];
     NSArray *bankList = [HWAppConfig sharedInstance].bankTypeList;
 
+    // 遍历所有银行汇总数据
     for (int i = 0; i < bankList.count; i ++) {
 
         NSMutableArray *valueList = [NSMutableArray arrayWithCapacity:6];
@@ -248,6 +255,40 @@
             [dataSource addObject:monthModel];
         }
     }
+
+    // 每个月的所有消费银行汇总数据
+    NSMutableArray *valueList = [NSMutableArray arrayWithCapacity:6];
+    NSMutableArray *monthNames = [NSMutableArray arrayWithCapacity:6];
+    float bankTotal = 0;
+
+    for (int j = 0; j <= 5; j ++) {
+        HWDateRangeModel *dateRangeModel = self.dateRangeList[j];
+        NSDate *beginDate = dateRangeModel.beginDate;
+        NSDate *lastDate = dateRangeModel.endDate;
+
+        NSNumber *total = [[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= %@", beginDate, lastDate] sumOfProperty:@"value"];
+        [monthNames addObject:[beginDate formattedDateWithFormat:@"yy/MM"]];
+
+        if (total) {
+            [valueList addObject:total];
+            bankTotal += total.floatValue;
+        } else {
+            [valueList addObject:@0];
+        }
+    }
+
+    if (bankTotal > 0) {
+        HWSummaryMonthModel *monthModel = [HWSummaryMonthModel new];
+        monthModel.typeName = @"所有消费汇总";
+        monthModel.yValues = valueList;
+        monthModel.xLabels = monthNames;
+
+        [dataSource insertObject:monthModel atIndex:0];
+
+        self.halfTotal = @(bankTotal);
+        self.halfPercent = @(bankTotal / (180000.00f * 6));
+    }
+
     self.barDataSource = dataSource;
 
 
@@ -258,7 +299,7 @@
 - (UILabel *)lblTotal {
     if (!_lblTotal) {
         _lblTotal = [UILabel labelWithAlignment:NSTextAlignmentLeft];
-        _lblTotal.attributedText = [self updateLabel:@"总金额：" value:@0];
+        _lblTotal.attributedText = [self updateLabel:@"总金额：" valueStr:@"0"];
     }
     return _lblTotal;
 }
@@ -266,10 +307,19 @@
 - (UILabel *)lblCost {
     if (!_lblCost) {
         _lblCost = [UILabel labelWithAlignment:NSTextAlignmentLeft];
-        _lblCost.attributedText = [self updateLabel:@"总消耗：" value:@0];
+        _lblCost.attributedText = [self updateLabel:@"总消耗：" valueStr:@"0"];
     }
     return _lblCost;
 }
+
+- (UILabel *)lblHalfYearCost {
+    if (!_lblHalfYearCost) {
+        _lblHalfYearCost = [UILabel labelWithAlignment:NSTextAlignmentLeft];
+        _lblHalfYearCost.attributedText = [self updateLabel:@"近6个月消费：" valueStr:@"0 0%"];
+    }
+    return _lblHalfYearCost;
+}
+
 
 - (PNPieChart *)pieChart {
     if (!_pieChart) {
@@ -281,7 +331,7 @@
 
 - (UIView *)tableHeader {
     if (!_tableHeader) {
-        _tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 367)];
+        _tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 400)];
     }
     return _tableHeader;
 }
