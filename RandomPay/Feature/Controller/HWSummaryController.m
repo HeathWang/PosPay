@@ -186,7 +186,7 @@
         return;
     }
 
-    NSNumber *bankType = @(indexPath.row + 1);
+    NSNumber *bankType = @(indexPath.row);
     HWDateRangeModel *dateRangeModel = self.dateRangeList[(NSUInteger) index];
 
     HWMonthDataListController *monthDataListController = [HWMonthDataListController new];
