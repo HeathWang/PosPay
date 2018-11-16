@@ -387,7 +387,6 @@
 				7EA29F912015ABCE00336040 /* Sources */,
 				7EA29F922015ABCE00336040 /* Frameworks */,
 				7EA29F932015ABCE00336040 /* Resources */,
-				8E8C81C5A85B20688AA6910B /* [CP] Embed Pods Frameworks */,
 				A2C78C3684365A3044FA9CCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -452,21 +451,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8E8C81C5A85B20688AA6910B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RandomPay/Pods-RandomPay-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A2C78C3684365A3044FA9CCC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

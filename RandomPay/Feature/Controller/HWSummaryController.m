@@ -177,6 +177,7 @@
 #pragma mark - HalfYearSummaryCellDelegate
 
 - (void)yearSummaryCell:(HWHalfYearSummaryCell *)cell didTapBarAtIndex:(NSInteger)index {
+    /*
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
     HWSummaryMonthModel *summaryMonthModel = self.barDataSource[(NSUInteger) indexPath.row];
@@ -194,6 +195,7 @@
     monthDataListController.dateRange = dateRangeModel;
 
     [self.navigationController pushViewController:monthDataListController animated:YES];
+     */
 }
 
 #pragma mark - UIScrollViewDelegate

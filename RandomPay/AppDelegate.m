@@ -212,7 +212,7 @@
     adConfiguration.contentMode = UIViewContentModeScaleAspectFill;
     adConfiguration.showFinishAnimate = ShowFinishAnimateFadein;
     adConfiguration.skipButtonType = SkipTypeTimeText;
-    adConfiguration.showEnterForeground = YES;
+    adConfiguration.showEnterForeground = NO;
     adConfiguration.duration = 3;
 
     [XHLaunchAd imageAdWithImageAdConfiguration:adConfiguration];

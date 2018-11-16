@@ -22,7 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"设置";
-    self.menuList = @[@"导出", @"恢复"];
+    self.menuList = @[@"导出数据库"];
 
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {

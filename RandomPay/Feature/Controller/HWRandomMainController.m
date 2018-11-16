@@ -67,7 +67,7 @@
 - (void)setupData {
     self.filterType = @0;
     // 只显示最近一个月的数据
-    NSDate *laterDate = [[NSDate date] dateByAddingMonths:-1];
+    NSDate *laterDate = [[NSDate date] dateByAddingMonths:-3];
     NSNumber *dayId = @([laterDate formattedDateWithFormat:@"yyyyMMdd"].integerValue);
     self.historyList = [[HWDayList objectsWhere:@"dayId >= %@", dayId] sortedResultsUsingKeyPath:@"dayId" ascending:NO];
 
@@ -79,8 +79,6 @@
     __weak typeof(self) weakSelf = self;
     self.token = [self.historyList addNotificationBlock:^(RLMResults<HWDayList *> *results, RLMCollectionChange *change, NSError *error) {
         UITableView *tableView1 = weakSelf.tableView;
-
-//        NSLog(@"%@ %@ %@", change.modifications, change.insertions, change.deletions);
 
         if (!change || tableView1.numberOfSections <= 0 || change.deletions.count > 0) {
             [tableView1 reloadData];
@@ -262,6 +260,7 @@
     return _headerView;
 }
 
+#pragma mark - dealloc
 
 - (void)dealloc {
     [self.token invalidate];
