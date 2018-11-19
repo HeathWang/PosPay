@@ -97,13 +97,13 @@ NSNumber *total = [[[HWRandom objectsWhere:@"randomDate >= %@ AND randomDate <= 
 * XHLaunchAd，广告加载（just for practice）
 
 ### 部分截图
-![-w300](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8096.jpg)
+![-w512](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8096.jpg)
 
-![-w300](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8097.jpg)
+![-w512](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8097.jpg)
 
-![-w300](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8098.jpg)
+![-w512](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8098.jpg)
 
-![-w300](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8099.jpg)
+![-w512](https://raw.githubusercontent.com/HeathWang/PosPay/master/screenshot/IMG_8099.jpg)
 
 
 
